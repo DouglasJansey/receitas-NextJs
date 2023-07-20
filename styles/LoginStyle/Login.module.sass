@@ -1,0 +1,133 @@
+@import '../variable'
+
+
+@mixin backgroundImg($image:file, $type:png, $repeat: no-repeat)
+    background-image: url('../../public/images/#{$image}.#{$type}')
+    background-repeat: $repeat
+    background-size: cover
+    background-position-x: 0
+    background-position-y: 0
+
+
+.image
+    width: 95%
+    height: 50%
+    
+.flex
+    display: flex
+    width: 100%
+    height: 100%
+    justify-content: center
+    align-items: center
+
+.container 
+  @extend .flex
+  width: 60%
+  height: 80%
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1)
+
+.form
+    @extend .flex
+    flex-direction: column 
+    justify-content: flex-start
+    height: 100%
+    width: 85%  
+    padding: 10px
+
+.savePassword
+    display: flex
+    width: 100%
+    height: 15%
+    justify-content: flex-start
+    align-items: center
+    input
+        margin-left: 0px
+        width: 0.8rem
+        height: 0.8rem
+        border: none
+        background: none
+        margin-right: 5px
+       
+.text
+    font-weight: bold
+    font-family: "Roboto", sans-serif
+    font-size: 10px
+    text-decoration: none
+
+.linkRegister
+    text-decoration: none
+    color: $color-orange
+    
+.footerRegister
+    @extend .flex
+    align-items: flex-end   
+    height: 90%
+    width: auto
+    padding: 15px
+    justify-content: center
+
+.IconeForm
+    width: 20px
+    height: 25px
+    opacity: 0.5
+
+.containerImage
+    @extend .flex
+    @include backgroundImg(bglogin, jpg )
+    width: 100%
+    height: 100%
+    
+.containerLogin
+    @extend .flex
+    flex-direction: column
+    background: #fff
+    color: $color-lightblue
+    height: 100%
+    width: 60%
+    justify-content: flex-start
+    h4
+        font-weight: bold
+        font-family: "Roboto", sans-serif
+        font-size: 20px
+        text-decoration: none
+
+.inputLogin
+    @extend .flex
+    background: none
+    border: none
+    &:focus
+        @extend .flex
+        background: none
+        border: none
+        outline: none
+       
+.labelContainer
+    @extend .flex
+    width: 100%
+    height: 40px
+    flex-direction: column
+    align-items: flex-start
+    font-size: 10px
+    padding: 2px
+    overflow: hidden
+    font-weight: bold
+    font-family: "Roboto", sans-serif
+    text-decoration: none 
+    position: relative
+    div
+        @extend .flex
+        border-bottom: 2px solid $color-lightblue
+
+
+.submitBotton
+    @extend .flex
+    background: $color-lightblue
+    height: 30px
+    outline: none
+    color: #fff
+    border: none
+    margin-top: 20px
+    cursor: pointer
+    opacity: 0.6    
+    &:hover
+        opacity: 1    

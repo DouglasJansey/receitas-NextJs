@@ -1,0 +1,27 @@
+@import './variable'
+
+@media (max-width: 600px) 
+  .grid 
+    width: 100%
+    flex-direction: column
+  
+.container
+    display: flex
+    width: auto
+    height: 95vh  
+    justify-content: center
+    align-items: center
+    background: $color-gray
+
+@media (prefers-color-scheme: dark) 
+  .card,
+  .footer 
+    border-color: #222
+  
+  .code 
+    background: #111
+  
+  .logo img 
+    filter: invert(1)
+  
+
