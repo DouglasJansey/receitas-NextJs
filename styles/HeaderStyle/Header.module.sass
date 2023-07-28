@@ -1,0 +1,31 @@
+@import '../variable'
+.container
+    display: flex
+    justify-content: space-around
+    align-items: center
+    width: 100%
+    height: 120px
+    background: $color-gray
+    position: fixed
+    font-family: "Roboto"
+    font-weight: bold
+
+.profile
+    @extend  .container
+    width: auto
+    position: relative
+
+.nav
+    display: flex
+    justify-content: space-around
+    align-items: center
+    width: 50%
+    height: auto
+        
+.linkStyle
+    text-decoration: none
+    color: #000
+    height: 100%
+    padding-bottom: 45px
+    &:hover           
+        border-bottom: 5px solid $color-orange
