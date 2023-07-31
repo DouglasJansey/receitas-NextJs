@@ -10,9 +10,13 @@
     font-family: "Roboto"
     font-weight: bold
 
+
 .profile
     @extend  .container
-    width: auto
+    width: 5.5%
+    height: auto
+    justify-content: space-around
+    align-items: center
     position: relative
 
 .nav
@@ -21,11 +25,42 @@
     align-items: center
     width: 50%
     height: auto
+    a
+        position: relative
+        &::after 
+          content: " "
+          background: $color-orange
+          width: 0
+          height: 5px
+          position: absolute
+          left: 0
+          bottom: -20px
+          transition: 0.3s
+        &:hover
+            &::after
+                  content: " "
+                  background: $color-orange
+                  width: 100%
+                  height: 5px
+                  position: absolute
+                  left: 0
+                  bottom: -20px
+                  
         
 .linkStyle
     text-decoration: none
     color: #000
     height: 100%
-    padding-bottom: 45px
-    &:hover           
-        border-bottom: 5px solid $color-orange
+
+.modal
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    top: 0
+    margin: auto
+    width: 30px
+    height: 50px
+    background: red
+    z-index: 9
+   

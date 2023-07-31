@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies } from "nookies";
 import { decode } from "jsonwebtoken";
+import { useRouter }  from "next/router";
 
 type User = {
   id: number;
@@ -22,7 +23,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null | any>(null);
-
+  const router = useRouter();
   const isAuthtenticated = !!user;
 
   useEffect(() => {
@@ -44,9 +45,8 @@ export function AuthProvider({ children }: any) {
     setCookie(undefined, "nextauth-token", token, {
       maxAge: 60 * 60 * 1,
     });
-    console.log(user);
     setUser(user);
-    // Router.push("/")
+    router.push("/");
   }
   return (
     <AuthContext.Provider value={{ user, isAuthtenticated, signIn }}>

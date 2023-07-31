@@ -1,0 +1,61 @@
+@import '../_variable'
+.texto
+    font-family: "Roboto"
+    font-weight: bold
+    font-size: 1.2rem
+    color: $color-green
+    
+.flex
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: auto
+
+.rodape
+    @extend .texto
+    font-size: 0.6rem
+    color: $color-orange
+.card
+    display: flex
+    width: auto
+    height: 150px
+    background: $color-gray
+    color: #4b4b4b
+    @extend .texto
+    font-size: 0.8rem
+
+.image
+    width: 70%
+    height: 100%
+    img
+        width: 100%
+        height: 100%
+
+.containerInfo
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    justify-content: flex-start
+    align-items: center
+    p
+        padding: 2px
+        margin: 1.5px
+        text-align: center
+
+// card vertical inicio
+.cardVertical
+    @extend .card
+    flex-direction: column
+    width: 180px
+    height: auto
+    border-radius: 5px
+    overflow: hidden
+
+.imageVertical
+    @extend .image
+    width: 100%
+    height: 150px
+  
+//card vertical final

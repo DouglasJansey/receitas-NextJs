@@ -1,4 +1,4 @@
-import LoginPage from "../components/Form/login"
+import LoginPage from "../components/Form/login/login"
 import style from '../../styles/Home.module.sass'
 
 export default function Login(){

@@ -24,6 +24,7 @@
   @extend .flex
   width: 60%
   height: 80%
+  margin-top: 130px 
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1)
 
 .form
@@ -130,4 +131,28 @@
     cursor: pointer
     opacity: 0.6    
     &:hover
-        opacity: 1    
+        opacity: 1
+
+.btnChange
+    @extend .flex
+    height: 30px
+    outline: none
+    color: #fff
+    border: none
+    margin-top: 20px
+    cursor: pointer
+    opacity: 0.6
+.switcher
+    @extend .flex
+
+.containerSwitch
+    width: 150px
+    background: black    
+.labelContainerInputs
+    @extend .flex
+    background: $color-lightblue
+    cursor: pointer
+    color: #fff
+    padding: 10px
+    input
+        display: none
