@@ -1,10 +1,10 @@
 import style from '../styles/Home.module.sass';
-import Register from './components/Form/register/register';
+import BannerPrincipal from './components/BannerPrincipal/BannerPrincipal'
 export default function Home() {
   return (
     <div className={style.container}>
       <div>
-        <Register />
+        <BannerPrincipal />
       </div>
     </div>
   )

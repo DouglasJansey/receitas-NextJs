@@ -10,8 +10,8 @@
 
 
 .image
-    width: 95%
-    height: 50%
+    width: 100%
+    height: 100%
     
 .flex
     display: flex
@@ -22,10 +22,14 @@
 
 .container 
   @extend .flex
+  @extend .text
   width: 60%
-  height: 80%
+  height: 100%
+  background: #fff
+  align-items: flex-start
   margin-top: 130px 
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1)
+  position: relative
 
 .form
     @extend .flex
@@ -33,7 +37,6 @@
     justify-content: flex-start
     height: 100%
     width: 85%  
-    padding: 10px
 
 .savePassword
     display: flex
@@ -61,11 +64,12 @@
     
 .footerRegister
     @extend .flex
-    align-items: flex-end   
-    height: 90%
-    width: auto
-    padding: 15px
+    align-items: center  
     justify-content: center
+    height: auto
+    position: absolute
+    bottom: 0
+
 
 .IconeForm
     width: 20px
@@ -74,23 +78,25 @@
 
 .containerImage
     @extend .flex
-    @include backgroundImg(bglogin, jpg )
+    @include backgroundImg(acaibg, jpg )
     width: 100%
     height: 100%
     
 .containerLogin
     @extend .flex
     flex-direction: column
-    background: #fff
-    color: $color-lightblue
-    height: 100%
-    width: 60%
+    color: $color-purple
+    height: 100% 
+    width: 80%
     justify-content: flex-start
+    align-items: center
+
     h4
         font-weight: bold
         font-family: "Roboto", sans-serif
         font-size: 20px
         text-decoration: none
+        margin: 0
 
 .inputLogin
     @extend .flex
@@ -117,12 +123,12 @@
     position: relative
     div
         @extend .flex
-        border-bottom: 2px solid $color-lightblue
+        border-bottom: 2px solid $color-purple
 
 
 .submitBotton
     @extend .flex
-    background: $color-lightblue
+    background: $color-purple
     height: 30px
     outline: none
     color: #fff
@@ -142,15 +148,57 @@
     margin-top: 20px
     cursor: pointer
     opacity: 0.6
-.switcher
-    @extend .flex
-
+    
 .containerSwitch
-    width: 150px
-    background: black    
+ position: relative
+ margin: 50px
+ width: 50%
+ height: auto
+
+ input
+    visibility: hidden
+    &:checked
+     + label
+        background: $color-purple
+        color: #fff
+        &::after
+            left: 71px
+            width: 65px
+
+.switcher
+   cursor: pointer
+   position: absolute
+   display: flex
+   justify-content: space-between
+   align-items: center
+   width: 130px
+   height: 25px
+   top: 0
+   left: 0
+   right: 0
+   bottom: 0
+   margin: auto
+   background-color: #ccc
+   padding: 5px
+   p
+    align-items: center
+    margin-right: 10px
+    font-size: 0.9rem
+
+   &::after
+    content: ""
+    width: 65px
+    height: 25px
+    background-color: #fff
+    position: absolute
+    left: 4px
+    top: 0
+    bottom: 0
+    margin: auto
+        
 .labelContainerInputs
     @extend .flex
-    background: $color-lightblue
+    background: $color-purple
     cursor: pointer
     color: #fff
     padding: 10px

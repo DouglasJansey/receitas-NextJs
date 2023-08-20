@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies } from "nookies";
 import { decode } from "jsonwebtoken";
 import { useRouter }  from "next/router";

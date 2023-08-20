@@ -2,28 +2,30 @@
 .flex
     display: flex
     justify-content: center
-    align-items: center
+    align-items: flex-start
     width: 100%
     height: 100%
+    
 
 .container
     @extend .flex
     flex-direction: column
-    justify-content: flex-start
-    width: 100%
-    height: 450px
-    background: #fff
-    font-family: "Roboto"
+    justify-content: center
+    width: 280px
+    height: auto
     font-weight: bold
-    font-size: 0.7rem
+    font-family: "Roboto", sans-serif
+    font-size: 10px
+    text-decoration: none
 
 .form
     @extend .flex
     flex-direction: column 
     justify-content: flex-start
-    height: 100%
-    width: 90%  
-    padding: 10px
+    height: 50%
+    width: 100% 
+    overflow: hidden
+
     label
         display: flex
         flex-direction: column
@@ -35,15 +37,14 @@
             background: none
             outline: none
             border: none
-            border-bottom: 2px solid $color-lightblue
+            border-bottom: 2px solid $color-purple
             width: 100%
 
 .btn
-    width: auto
-    height: auto
-    padding: 10px 20px
+    width: 100%
+    height: 30px
     border: none
-    background: $color-lightblue
+    background: $color-purple
     color: #fff
     margin-top: 15px
     cursor: pointer

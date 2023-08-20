@@ -1,43 +1,72 @@
 /* eslint-disable react/jsx-key */
 import { useContext } from "react";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { AuthContext } from "../../contexts/authContext";
 import style from "../../../styles/HeaderStyle/Header.module.sass";
+import { useRouter } from "next/router";
+import { isTemplateExpression } from "typescript";
+type ActiveLinkProps ={
+  children: React.ReactNode
+} & LinkProps
 
 export default function Header() {
-  const {isAuthtenticated}  = useContext(AuthContext)
+  const { isAuthtenticated } = useContext(AuthContext);
+  const { pathname } = useRouter();
+  const newarr = pathname.split("/").includes("cardapio");
 
   const menu: Array<string> = [
-    "Receitas",
-    "Minhas Receitas",
-    "Cadastrar Receitas",
-    "Categoria",
+    "Cardápio",
+    "Sobre nós",
+    "Onde estamos",
+    "Contato",
   ];
-
+  const filterWords = (value: string): string => {
+    const path = value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(" ", "");
+    
+    return path;
+  };
+  const activeLink = (url: string) => { 
+   const path = pathname === url 
+   const active = path ? style.activePath : style.linkStyle
+      return active
+  };
   return (
     <>
       <div className={style.container}>
         <div>
           <h2>
             <Link className={style.linkStyle} href="/">
-              <img width={80} height={80} src={"https://w7.pngwing.com/pngs/754/944/png-transparent-dining-room-drawing-tapet-design-food-recipe-logo.png"} alt=""/>
+              <img src="/images/logo.png" alt="" />
             </Link>
           </h2>
         </div>
         <nav className={style.nav}>
           {menu.map((item, index) => (
             <div key={index}>
-              <a className={style.linkStyle} href="#">
+              <Link
+                className={activeLink(`/index/${filterWords(item)}`)}
+                href={`/index/${filterWords(item)}`}
+              >
                 {item}
-              </a>
+              </Link>
             </div>
           ))}
         </nav>
-        <div className={style.profile} onClick={(e) => console.log(e)}>
-          {isAuthtenticated ? (<p>Perfil</p>) : (<Link className={style.linkStyle} href={"/login"}>Login</Link>)}
+        <div className={style.profile}>
+          {isAuthtenticated ? (
+            <p>Perfil</p>
+          ) : (
+            <Link className={activeLink(`/index/${filterWords("login")}`)} href={"/index/login"}>
+              Login
+            </Link>
+          )}
           <MdKeyboardArrowDown />
         </div>
       </div>

@@ -20,7 +20,6 @@ export default function Register() {
   return (
     <div className={style.flex}>
       <div className={style.container}>
-        <h1>Cadastro</h1>
         <form className={style.form} onSubmit={(ev) => handleSubmit(ev)}>
           <label htmlFor="name">
             Nome:

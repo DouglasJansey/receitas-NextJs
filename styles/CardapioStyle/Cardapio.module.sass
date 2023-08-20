@@ -1,0 +1,240 @@
+@import '../variable'
+@import '../tipography'
+@import '../BannersStyle/Banners.module'
+
+.flex
+    display: flex
+    width: 100%
+    height: 100%
+    justify-content: center
+    align-items: center
+    font-family: $roboto
+    color: $color-purple
+.container
+    @extend .flex
+    margin-top: 100px
+    width: 100%
+    height: 100%
+    position: relative
+    &::before
+        content: ""
+        @include backgroundImg(bgCardapio , jpg )
+        position: absolute
+        width: 100%
+        height: 100%
+        top: 0px
+        right: 0px
+        bottom: 0px
+        left: 0px
+        opacity: 0.5   
+.cardapioContainer
+    @extend .flex
+    width: 80%
+    border: 5px dotted $color-purple
+    height: auto
+    justify-content: center
+    align-items: flex-start
+    background: #fff
+    position: relative
+    margin-bottom: 15px
+    &::before
+        content: ""
+        @include backgroundImg(bgacai , png )
+        position: absolute
+        width: 100%
+        height: 100%
+        top: 0px
+        right: 0px
+        bottom: 0px
+        left: 0px
+        opacity: 0.4
+        filter: blur(3px)
+    &:last-child
+        ul
+            h4, h3
+                margin: 0
+            li
+                width: 45%
+                height: auto
+                margin: 0
+                padding: 0
+.containerComplemento
+    @extend .flex
+    width: 55%
+    height: 100%
+    color: $color-purple
+    flex-wrap: wrap
+    z-index: 5
+    border-left: 5px dotted $color-purple
+    ul    
+        @extend .flex
+        flex-wrap: wrap
+        margin-right: 25px     
+        list-style: none
+        li
+            display: flex
+            justify-content: center
+            align-items: center
+            margin: 0
+            width: auto
+            &::after
+                content: "-"
+            &:last-child
+                &::after
+                    content: none
+        h3     
+            margin: 0
+.textTitulo
+    @extend .flex
+    width: 100%
+    height: auto
+    padding: 5px
+    h2
+        margin: 0
+        width: 100%
+        background: yellow
+        padding: 10px 35px
+.textItemContainer
+    @extend.flex
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+    width: auto
+    height: auto
+    padding: 2px
+.containerName
+    @extend .flex
+    justify-content: center
+    align-items: center
+    white-space: nowrap
+    width: auto
+    height: auto   
+    h3
+        padding: 5px      
+.containerSize
+    @extend .flex  
+    width: 20%
+    justify-content: flex-start
+    height: auto        
+.containerPrice
+    @extend .flex
+    width: auto
+    justify-content: flex-end
+    position: relative
+    width: 100%
+    h4
+        @extend .flex  
+        width: 100%
+        justify-content: flex-start
+        &::before
+            @extend .flex
+            justify-content: flex-start
+            content: ""
+            height: 5px
+            border-bottom: 3px dotted $color-purple
+            width: 100%
+            margin: 0 10px 0 10px
+.containerItens
+    @extend .flex
+    align-items: center
+    justify-content: center
+    width: 250px
+    height: 100px
+    background: blue 
+    overflow: hidden 
+    img
+        width: 100%
+        height: 100%
+.cardapio
+    @extend .flex
+    width: 80%
+    justify-content: center
+    padding: 5px
+    align-items: center
+    color: $color-purple
+    height: 100%
+    z-index: 1
+    div
+        margin: 0
+        padding: 0  
+.subContainerMenu
+    @extend .flex
+    z-index: 2
+    flex-direction: column
+    text-align: center
+.ulcontainer
+    @extend .flex
+    list-style: none
+    margin: 0
+    padding: 0
+    width: 100%
+    gap: 1%
+    flex-wrap: wrap
+    li
+        width: 100%
+.divInfoText
+    display: flex
+    width: auto
+    height: auto
+    min-width: 350px
+    height: 100%
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    position: relative
+    z-index: 5
+    img
+        height: 200%
+        z-index: 5
+        position: absolute
+        right: -50px
+
+    h1, h2, h3, h4
+        margin: 0
+        position: absolute
+        padding: 0
+        filter: drop-shadow(5px 3px 0px #1f1f27)
+    h1
+        font-size: 3.5rem
+        font-family: $barriecito
+        left: 20px
+        top: 0
+        p
+            font-family: $lilita
+            font-size: 5.5rem
+            color: yellow
+            position: absolute
+            top: -40px
+            left: 20px
+    h2
+        font-size: 3.5rem
+        font-family: $barriecito
+        right: 0
+        top: 60px
+    h3
+        font-size: 2.5rem
+        font-family: $roboto
+        top: 25px
+        right: -45px
+    h4
+        bottom: 40px
+        font-size: 1.5rem
+        right: -30px
+.divProducts
+    @extend .flex
+    height: 150px
+    justify-content: space-around  
+    max-height: 150px
+    margin: 30px 0px 20px 0px
+    background: #790222
+    color: #FFF
+    position: relative
+    &::after
+        content: ""
+        @include backgroundImg(bgbananamorango, jpeg )
+        height: 100%
+        width: 100%
+        position: absolute
+        opacity: 0.5
+        z-index: 1

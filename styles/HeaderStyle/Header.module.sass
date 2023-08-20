@@ -4,11 +4,13 @@
     justify-content: space-around
     align-items: center
     width: 100%
-    height: 120px
-    background: $color-gray
+    height: 100px
+    color: #fff
+    top: 0
+    background: $color-purple
     position: fixed
-    font-family: "Roboto"
-    font-weight: bold
+    font-family: "Roboto", sans-serif
+    z-index: 10
 
 
 .profile
@@ -27,7 +29,15 @@
     height: auto
     a
         position: relative
-        &::after 
+       
+
+        
+.linkStyle
+    text-decoration: none
+    color: #fff
+    height: 100%
+    position: relative
+    &::after 
           content: " "
           background: $color-orange
           width: 0
@@ -36,21 +46,39 @@
           left: 0
           bottom: -20px
           transition: 0.3s
-        &:hover
-            &::after
+    &:hover
+        &::after
                   content: " "
-                  background: $color-orange
+                  background: yellow
                   width: 100%
                   height: 5px
                   position: absolute
                   left: 0
                   bottom: -20px
-                  
-        
-.linkStyle
+    img
+        width: 200px
+        height: 150px
+        position: absolute
+        bottom: 0
+        top: 10px
+        right: -130px
+        margin: auto
+
+.activePath
     text-decoration: none
-    color: #000
+    color: #fff
     height: 100%
+    position: relative
+    &::after 
+          content: " "
+          background: yellow
+          width: 100%
+          height: 5px
+          position: absolute
+          left: 0
+          bottom: -20px
+          transition: 0.3s
+
 
 .modal
     position: absolute

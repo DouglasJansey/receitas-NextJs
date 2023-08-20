@@ -28,17 +28,18 @@ export default function Login() {
     <>
       <div className={style.container}>
         <div className={style.containerImage}>
-          <img src="/images/picture.png" className={style.image} alt="" />
+          <img src="/images/acai2.webp" className={style.image} alt="" />
         </div>
         <div className={style.containerLogin}>
           {register ? (
-            <div>
+            <div className={style.form}>
+              <h4>Cadastro</h4>
               <Register />
             </div>
           ) : (
             <>
-              <h4>Login</h4>
               <form className={style.form} onSubmit={(ev) => handleSubmit(ev)}>
+              <h4>Login</h4>
                 <label className={style.labelContainer}>
                   Email:
                   <div>
@@ -83,17 +84,16 @@ export default function Login() {
             </>
           )}
           <div className={style.footerRegister}>
-            <div>
-              <label className={style.switcher} htmlFor="login">
-                <span>Login</span>
-                <div className={style.containerSwitch}>
-                <input
-                  name="login"
-                  type="checkbox"
-                  checked={register}
-                  onChange={(e) => setRegister(e.currentTarget.checked)}
-                  />
-                  </div>
+            <div className={style.containerSwitch}>
+              <input
+                className="checkbox"
+                id="checkbox"
+                type="checkbox"
+                checked={register}
+                onChange={(e) => setRegister(e.currentTarget.checked)}
+              />
+              <label className={style.switcher} htmlFor="checkbox">
+                <p>Cadastro</p><p>Login</p>
               </label>
             </div>
           </div>

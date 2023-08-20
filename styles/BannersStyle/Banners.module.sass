@@ -1,0 +1,130 @@
+@import '../tipography'
+@import '../variable'
+
+@mixin backgroundImg($image:file, $type:png)
+    background-image: url('../../public/images/#{$image}.#{$type}')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position-y: 40%
+
+.flex
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    width: 100%
+    height: 100%
+    gap: 1%
+
+.containerTest
+    @extend .flex
+    position: relative
+    div
+        flex: none
+        gap: 1%
+        width: 100%
+        height: 350px
+        display: flex
+
+.arrowRight
+    display: flex
+    justify-content: center
+    align-items: center
+    position: absolute
+    width: 30px
+    height: 30px
+    z-index: 5
+    border-radius: 100%
+    right: 10px
+    font-size: 3rem
+    background: $color-purple
+    color: $color-gray
+.arrowLeft
+    @extend .arrowRight
+    left: 10px
+    transform: rotate(180deg)
+    cursor: pointer
+
+.text
+    text-align: center
+    font-size: 0.9rem
+    color: white
+    font-family: $roboto
+
+.textTitle
+    @extend .text
+    font-family: $pacifico
+    font-size: 3.5rem
+    color: yellow
+
+.containerTextoInfo
+    @extend .flex
+    @extend .text
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 65%
+    z-index: 20
+    p
+        margin: 0
+        padding: 0
+
+.container
+    @extend .flex
+    margin-top: 100px
+    width: 99vw
+    height: 85vh
+    position: relative
+
+.containerDesc
+    @extend .flex
+    width: 60%
+    margin-bottom: 10px
+
+.btnInfo
+    background: yellow
+    outline: none
+    border: none
+    padding: 10px 50px
+    margin-top: 10px
+    margin-left: 110px
+    text-decoration: none
+    @extend .text
+    color: $color-purple
+    font-weight: bold
+    cursor: pointer
+    &:hover
+        opacity: 1
+        background: $color-orange
+        transition: 0.3s
+
+.containerImage
+    background: #ff0000
+    width: 100%
+    height: 250px
+
+.backgroundRight
+    @extend .containerImage
+    width: 50%
+
+.backgroundLeft
+    @extend .containerImage
+    width: 50%
+  
+      
+.containerMiddle
+    display: flex
+    width: 50%
+    min-width: 450px
+    position: absolute
+    align-items: center
+    justify-content: center
+    z-index: 1
+    bottom: 0
+    top: 0
+    right: 0
+    left: 0
+    margin: auto
+    img
+        width: 100%
+        height: 100%
+        
