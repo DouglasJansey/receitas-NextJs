@@ -18,11 +18,11 @@
 .containerTest
     @extend .flex
     position: relative
+    overflow: hidden
     div
         flex: none
-        gap: 1%
         width: 100%
-        height: 350px
+        height: 90vh
         display: flex
 
 .arrowRight
@@ -38,11 +38,12 @@
     font-size: 3rem
     background: $color-purple
     color: $color-gray
+    cursor: pointer
+
 .arrowLeft
     @extend .arrowRight
     left: 10px
     transform: rotate(180deg)
-    cursor: pointer
 
 .text
     text-align: center
@@ -98,9 +99,17 @@
         transition: 0.3s
 
 .containerImage
-    background: #ff0000
+    display: flex
+    justify-content: center
+    align-content: center
     width: 100%
     height: 250px
+    div
+        width: 50%
+        height: 100%
+        img
+            width: 100%
+            height: 100%
 
 .backgroundRight
     @extend .containerImage

@@ -6,49 +6,6 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String
-  password String
-  recipe Recipe[]
-}
-model Recipe {
-  id Int @id @default(autoincrement())
-  name String
-  ingredients Ingredients[]
-  share Boolean
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-  comments Comments[]
-  rating Rating[]
-}
-model Ingredients {
-  id Int @id @default(autoincrement())
-  name String
-  quantity String
-  recipe Recipe @relation(fields: [recipeIngredients], references: [id])
-  recipeIngredients Int
-}
-model Comments {
-  id Int @id @default(autoincrement())
-  author String
-  comment String
-  date DateTime
-  recipe Recipe @relation(fields: [recipeId], references: [id])
-  recipeId Int
-}
-model Rating {
-  idRate Int @id @default(autoincrement())
-  start5 Int?
-  start4 Int?
-  start3 Int?
-  start2 Int?
-  start1 Int?
-  recipe Recipe @relation(fields: [recipeId], references: [id])
-  recipeId Int
 }

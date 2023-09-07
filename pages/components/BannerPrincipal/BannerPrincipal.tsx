@@ -1,59 +1,66 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import style from "../../../styles/BannersStyle/Banners.module.sass";
 import { FaArrowCircleRight } from "react-icons/fa";
 import carouselImage from "../../__test/Banner";
-import { useState } from "react";
-
+import { useState, useRef, useEffect } from "react";
+ 
 export default function BannerPrincipal() {
-  const testCarr = [1, 1, 1, 1, 1, 1,1,1,1];
-  const [moveX, setMoveX] = useState(0)
-  let x = 0;
+  const containerRef = useRef(null);
+  const [refcontainer, setRefContainer] = useState();
+  const [moveX, setMoveX] = useState({
+    arrowleft: 0,
+    arrowright: 0
+  })
+  const handlerDirectionX = (e: any) => {
+    const {parentElement} = e.target.parentElement
+    const {id} = parentElement
+    const width: any = refcontainer;
+    let arrowleft = moveX.arrowleft + width;
+    let arrowright = moveX.arrowright - width;
+    id === "arrowleft" ? setMoveX({...moveX, [id]: arrowleft})
+    : setMoveX({...moveX, [id]: arrowright})
+  }
+  console.log(moveX)
+  useEffect(()=>{
+    const {clientWidth}: any = containerRef.current
+    setRefContainer(clientWidth)
+  },[])
   return (
     <div className={style.container}>
-      <div className={style.arrowRight} onClick={(e) => console}>
+      <div id="arrowright" className={style.arrowRight}>
         <FaArrowCircleRight />
       </div>
-      <div className={style.arrowLeft}>
+      <div id="arrowleft" className={`${style.arrowLeft} arrowleft`}
+      onClick={(e) => handlerDirectionX(e)}>
         <FaArrowCircleRight />
       </div>
-      <div className={style.containerTest}>
+      <div className={style.containerTest }>
         {/*div principal*/}
         <div>
-        {testCarr.map((_, index) => (
+        {carouselImage.map((banner, index) => (
           <div
             key={index}
             className={style.containerImage}
             style={{ transform: `translateX(${moveX}px)` }}
-            >{index}</div>
+            ref={containerRef}
+            >
+              <div>
+                <img src={banner.imageLeft} alt="" />
+              </div>
+              <div className={style.containerMiddle}>
+                <img src={banner.middleImg} alt="" />
+              </div>
+              <div>
+                <img src={banner.imageRight} alt="" />
+              </div>
+            </div>
             ))}
             </div>
       </div>
       {/*
-      <div className={style.backgroundLeft}>
-        <img src={carouselImage.imageLeft} alt="couresel" />
-      </div>
-      <div className={style.containerMiddle}>
-        <img
-          src={carouselImage.middleImg}
-          alt=""
-        />
-      </div>
-      <div className={style.backgroundRight}>
-        <img src={carouselImage.imageRight} alt="couresel" />
-      </div>
-            <div className={style.containerTextoInfo}>
-                <p className={style.textTitle}>Combinações</p>
-                <div className={style.containerDesc}>
-                <p>Se você gosta de variedades,
-                    são muitas combinações de complementos
-                    que você pode escolher,
-                    além de opções de misturas 
-                    para o seu Açaí.
-                </p>
-                </div>
-                <Link href="/index/cardapio" className={style.btnInfo} >Conheça</Link>
-            </div>
+    
         */}
     </div>
   );
