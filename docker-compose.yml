@@ -1,0 +1,9 @@
+services:
+  image: node
+  command: bun install && bun run dev
+container_image: nodeJS
+ports: 3000
+volumes:
+- .:/usr/src/app
+
+restart: always
