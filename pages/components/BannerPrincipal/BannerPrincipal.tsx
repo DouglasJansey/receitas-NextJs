@@ -23,9 +23,7 @@ export default function BannerPrincipal() {
   };
   console.log(containerRef)
   useEffect(() => {
-    const { clientWidth }: any = containerRef;
-    console.log(clientWidth)
-  
+    const { clientWidth }: any = containerRef;  
   }, []);
   return (
     <div className={style.container}>
