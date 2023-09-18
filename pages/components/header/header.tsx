@@ -15,6 +15,7 @@ export default function Header() {
 
   const menu: Array<string> = [
     "Cardápio",
+    "Pedido",
     "Sobre nós",
     "Onde estamos",
     "Contato",

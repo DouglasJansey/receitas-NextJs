@@ -14,17 +14,17 @@ export default function BannerPrincipal() {
   const handlerDirectionX = (e: any) => {
     const name: string = e.target.id
     const width = refcontainer
-    
+
     type NameArrow = typeof direction;
     type KeyArrow = keyof NameArrow;
     const direction = {
       "arrowleft": () => {
-        return moveX < 0 
-         ? moveX + width : 0
+        return moveX < 0
+          ? moveX + width : 0
       },
       "arrowright": () => {
         return (moveX > (carouselImage.length * -width + width))
-         ? moveX - width : moveX;
+          ? moveX - width : moveX;
       },
     }
     setMoveX(direction[name as KeyArrow])
