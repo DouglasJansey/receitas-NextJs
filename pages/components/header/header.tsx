@@ -1,16 +1,12 @@
 /* eslint-disable react/jsx-key */
 import { useContext } from "react";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { AuthContext } from "../../contexts/authContext";
 import style from "../../../styles/HeaderStyle/Header.module.sass";
 import { useRouter } from "next/router";
-import { isTemplateExpression } from "typescript";
-type ActiveLinkProps ={
-  children: React.ReactNode
-} & LinkProps
 
 export default function Header() {
   const { isAuthtenticated } = useContext(AuthContext);

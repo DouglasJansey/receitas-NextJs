@@ -14,8 +14,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["bun-types"]
+    "types": ["bun-types", "jest"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/BannerPrincipal/BannerPrincipal.tsx"],
+  "include": ["next-env.d.ts", "**/*.tsx", "pages/components/BannerPrincipal/BannerPrincipal.tsx"],
   "exclude": ["node_modules"]
 }

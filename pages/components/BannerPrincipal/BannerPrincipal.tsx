@@ -1,41 +1,50 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import style from "../../../styles/BannersStyle/Banners.module.sass";
-import { FaArrowCircleRight } from "react-icons/fa";
 import carouselImage from "../../__test/Banner";
 import { useState, useRef, useEffect } from "react";
 
 export default function BannerPrincipal() {
   const containerRef = useRef('');
-  const [refcontainer, setRefContainer] = useState();
-  const [moveX, setMoveX] = useState({
-    arrowleft: 0,
-    arrowright: 0,
-  });
+  const [refcontainer, setRefContainer] = useState(0);
+  const [moveX, setMoveX] = useState(0);
+
   const handlerDirectionX = (e: any) => {
-    const { parentElement } = e.target.parentElement;
-    const { id } = parentElement;
-    const width = 0;
-    let left = moveX.arrowleft - width;
-    let right = moveX.arrowright;
-    if(id === "arrowleft") return setMoveX({ ...moveX, [`${id}`]: left })
+    const name: string = e.target.id
+    const width = refcontainer
+    
+    type NameArrow = typeof direction;
+    type KeyArrow = keyof NameArrow;
+    const direction = {
+      "arrowleft": () => {
+        return moveX < 0 
+         ? moveX + width : 0
+      },
+      "arrowright": () => {
+        return (moveX > (carouselImage.length * -width + width))
+         ? moveX - width : moveX;
+      },
+    }
+    setMoveX(direction[name as KeyArrow])
   };
-  console.log(containerRef)
+
   useEffect(() => {
-    const { clientWidth }: any = containerRef;  
+    const { clientWidth }: any = containerRef.current;
+    setRefContainer(clientWidth)
   }, []);
   return (
     <div className={style.container}>
-      <div id="arrowright" className={style.arrowRight}>
-        <FaArrowCircleRight />
+      <div>
+        <img src="/images/arrow.png" className={style.arrowRight}
+          onClick={(e) => handlerDirectionX(e)}
+          id="arrowright" />
       </div>
-      <div
-        id="arrowleft"
-        className={`${style.arrowLeft} arrowleft`}
-        onClick={(e) => handlerDirectionX(e)}
-      >
-        <FaArrowCircleRight />
+      <div>
+        <img src="/images/arrow.png" className={style.arrowLeft}
+          onClick={(e) => handlerDirectionX(e)}
+          id="arrowleft" />
       </div>
       <div className={style.containerTest}>
         {/*div principal*/}
@@ -53,6 +62,13 @@ export default function BannerPrincipal() {
               <img src={banner.middleImg} alt="" />
             </span>
             <div className={style.backgroundRight}>
+              <span className={style.containerTextoInfo}>
+                <h2 className={style.textTitle}>{banner.titulo}</h2>
+                <h5 className={style.text}>{banner.descricao}</h5>
+                <Link className={style.linkRouter} href={"/index/cardapio"}>
+                  Monte o seu!
+                </Link>
+              </span>
               <img
                 src={banner.imageRight}
                 alt=""
