@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ChangeEvent, useState } from "react";
 import style from "../../../styles/CardapioStyle/Cardapio.module.sass";
-import products from "../../__test/produtos";
+import products from "../../../__test/produtos";
 
 export default function Cardapio() {
   const [inputValue, setInputValue] = useState({

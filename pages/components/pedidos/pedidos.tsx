@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ChangeEvent, useState } from 'react';
 import style from '../../../styles/PedidoStyle/Pedido.module.sass';
+import React from 'react';
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { AuthContext } from "../../contexts/authContext";
+import { AuthContext } from "../../../contexts/authContext";
 import style from "../../../styles/HeaderStyle/Header.module.sass";
 import { useRouter } from "next/router";
 

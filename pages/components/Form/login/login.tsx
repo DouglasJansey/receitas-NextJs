@@ -3,7 +3,7 @@ import { FormEvent, useContext, useState } from "react";
 import Link from "next/link";
 import style from "../../../../styles/LoginStyle/Login.module.sass";
 import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
-import { AuthContext } from "../../../contexts/authContext";
+import { AuthContext } from "../../../../contexts/authContext";
 import Register from "../register/register";
 
 export default function Login() {
@@ -73,7 +73,7 @@ export default function Login() {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        ["savePassword"]: !!e.currentTarget.checked,
+                       // ["savePassword"]: !!e.currentTarget.checked,
                       })
                     }
                   />
@@ -90,7 +90,7 @@ export default function Login() {
                 id="checkbox"
                 type="checkbox"
                 checked={register}
-                onChange={(e) => setRegister(e.currentTarget.checked)}
+               // onChange={(e) => setRegister(e.currentTarget.checked)}
               />
               <label className={style.switcher} htmlFor="checkbox">
                 <p>Cadastro</p><p>Login</p>

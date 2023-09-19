@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import style from "../../../styles/BannersStyle/Banners.module.sass";
-import carouselImage from "../../__test/Banner";
+import carouselImage from "../../../__test/Banner";
 import { useState, useRef, useEffect } from "react";
 
 export default function BannerPrincipal() {

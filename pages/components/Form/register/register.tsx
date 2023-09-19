@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import style from "../../../../styles/RegisterStyle/Register.module.sass";
 
-import RegisterAccount from "../../../service/register";
+import RegisterAccount from "../../../../service/register";
 
 export default function Register() {
   const [formData, setFormData] = useState({
