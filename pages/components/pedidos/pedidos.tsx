@@ -22,13 +22,11 @@ export default function Pedidos() {
         const { value, name } = e.target
         setOder({ ...order, [name]: value })
     }
-    console.log(order)
     function handleDisable(index: number): boolean {
         const num = count
         if (index > num) return true
         return false
     }
-    console.log(count)
     return (
         <div className={style.container}>
             <div className={style.containerIcons}>
