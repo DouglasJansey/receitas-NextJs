@@ -23,6 +23,11 @@ export default function Login() {
     ev.preventDefault();
     await signIn(formData);
   };
+  const SavePassword = (ev: any) => {
+    const {checked} = ev.target
+    setFormData({...formData, ["savePassword"]: checked})
+    console.log(checked)
+  };
 
   return (
     <>
@@ -70,13 +75,7 @@ export default function Login() {
                   <input
                     type="checkbox"
                     checked={formData.savePassword}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                       // ["savePassword"]: !!e.currentTarget.checked,
-                      })
-                    }
-                  />
+                    onChange={(e) => SavePassword(e)}/>
                   <p className={style.text}>Lembrar minha senha</p>
                 </span>
                 <button className={style.submitBotton}>Entrar</button>
@@ -90,10 +89,10 @@ export default function Login() {
                 id="checkbox"
                 type="checkbox"
                 checked={register}
-               // onChange={(e) => setRegister(e.currentTarget.checked)}
+               onChange={(e) => setRegister(!register)}
               />
               <label className={style.switcher} htmlFor="checkbox">
-                <p>Cadastro</p><p>Login</p>
+    
               </label>
             </div>
           </div>

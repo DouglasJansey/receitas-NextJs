@@ -26,46 +26,48 @@ export default function Header() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(" ", "");
-    
+
     return path;
   };
-  const activeLink = (url: string) => { 
-   const path = pathname === url 
-   const active = path ? style.activePath : style.linkStyle
-      return active
+  const activeLink = (url: string) => {
+    const path = pathname === url
+    const active = path ? style.activePath : style.linkStyle
+    return active
   };
   return (
     <>
       <div className={style.container}>
-        <div>
-          <h2>
-            <Link className={style.linkStyle} href="/">
-              <img src="/images/logo.png" alt="" />
-            </Link>
-          </h2>
+        <div className={style.divImage}>
+          <Link href="/">
+            <img src="/images/logo.png" alt="" />
+          </Link>
         </div>
-        <nav className={style.nav}>
-          {menu.map((item, index) => (
-            <div key={index}>
-              <Link
-                className={activeLink(`/index/${filterWords(item)}`)}
-                href={`/index/${filterWords(item)}`}
-              >
-                {item}
-              </Link>
-            </div>
-          ))}
-        </nav>
-        <div className={style.profile}>
-          {isAuthtenticated ? (
-            <p>Perfil</p>
-          ) : (
-            <Link className={activeLink(`/index/${filterWords("login")}`)} href={"/index/login"}>
-              Login
-            </Link>
-          )}
-          <MdKeyboardArrowDown />
-        </div>
+        <span>
+          <nav className={style.nav}>
+            {menu.map((item, index) => (
+              <div key={index}>
+                <Link
+                  className={activeLink(`/index/${filterWords(item)}`)}
+                  href={`/index/${filterWords(item)}`}
+                >
+                  {item}
+                </Link>
+              </div>
+            ))}
+          </nav>
+          <div className={style.profile}>
+            {isAuthtenticated ? (
+              <p>Perfil</p>
+            ) : (
+              <div>
+                <Link className={activeLink(`/index/${filterWords("login")}`)} href={"/index/login"}>
+                  Login
+                </Link>
+                <MdKeyboardArrowDown />
+              </div>
+            )}
+          </div>
+        </span>
       </div>
     </>
   );

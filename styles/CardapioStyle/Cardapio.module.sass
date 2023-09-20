@@ -10,11 +10,12 @@
     align-items: center
     font-family: $roboto
     color: $color-purple
+
 .container
     @extend .flex
-    margin-top: 100px
+    margin-top: 150px
     width: 100%
-    height: 100%
+    height: auto
     position: relative
     &::before
         content: ""
@@ -22,10 +23,6 @@
         position: absolute
         width: 100%
         height: 100%
-        top: 0px
-        right: 0px
-        bottom: 0px
-        left: 0px
         opacity: 0.5   
 .cardapioContainer
     @extend .flex
@@ -37,6 +34,8 @@
     background: #fff
     position: relative
     margin-bottom: 15px
+    @media( max-width: 850px)
+        width: 90%
     &::before
         content: ""
         @include backgroundImg(bgacai , png )
@@ -54,46 +53,44 @@
             h4, h3
                 margin: 0
             li
-                width: 45%
+                width: 55%
                 height: auto
                 margin: 0
                 padding: 0
 .containerComplemento
     @extend .flex
-    width: 55%
+    width: 50%
     height: 100%
     color: $color-purple
     flex-wrap: wrap
     z-index: 5
     border-left: 5px dotted $color-purple
-    ul    
-        @extend .flex
+    ul  
+        display: flex
+        width: auto 
         flex-wrap: wrap
-        margin-right: 25px     
         list-style: none
+        justify-content: center
+        padding: 10px
         li
             display: flex
             justify-content: center
             align-items: center
-            margin: 0
             width: auto
+            padding: 5px
             &::after
                 content: "-"
+                margin-left: 5px 
             &:last-child
                 &::after
                     content: none
         h3     
             margin: 0
 .textTitulo
-    @extend .flex
+    display: block
     width: 100%
     height: auto
-    padding: 5px
-    h2
-        margin: 0
-        width: 100%
-        background: yellow
-        padding: 10px 35px
+    background: yellow
 .textItemContainer
     @extend.flex
     display: flex
@@ -109,12 +106,10 @@
     align-items: center
     white-space: nowrap
     width: auto
-    height: auto   
-    h3
-        padding: 5px      
+    height: auto    
 .containerSize
     @extend .flex  
-    width: 20%
+    width: auto
     justify-content: flex-start
     height: auto        
 .containerPrice
@@ -139,40 +134,45 @@
     @extend .flex
     align-items: center
     justify-content: center
-    width: 250px
-    height: 100px
-    background: blue 
-    overflow: hidden 
+    width: auto
+    height: 100%
+    max-width: 150px
+    max-width: 100px
+    overflow: hidden
+    @media( max-width: 800px)
+        display: none
     img
         width: 100%
         height: 100%
 .cardapio
     @extend .flex
-    width: 80%
+    width: auto
     justify-content: center
-    padding: 5px
     align-items: center
     color: $color-purple
-    height: 100%
+    height: auto
     z-index: 1
-    div
-        margin: 0
-        padding: 0  
+    gap: 2%
 .subContainerMenu
-    @extend .flex
+    display: flex
+    align-items: center
     z-index: 2
     flex-direction: column
     text-align: center
+    width: 100%
 .ulcontainer
     @extend .flex
     list-style: none
-    margin: 0
-    padding: 0
-    width: 100%
-    gap: 1%
     flex-wrap: wrap
+    justify-content: center
+    align-items: space-between
+    width: auto
+    padding: 0
     li
-        width: 100%
+        width: 95%
+        height: auto
+        padding: 0
+        margin-bottom: 5px
 .divInfoText
     display: flex
     width: auto
@@ -184,6 +184,9 @@
     align-items: center
     position: relative
     z-index: 5
+    @media( max-width: 850px)
+        min-width: 150px
+        width: 100%
     img
         height: 200%
         z-index: 5
@@ -221,6 +224,7 @@
         bottom: 40px
         font-size: 1.5rem
         right: -30px
+
 .divProducts
     @extend .flex
     height: 150px
@@ -230,6 +234,8 @@
     background: #790222
     color: #FFF
     position: relative
+    @media(max-width: 850px)
+        display: none
     &::after
         content: ""
         @include backgroundImg(bgbananamorango, jpeg )

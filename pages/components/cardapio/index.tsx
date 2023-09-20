@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import style from "../../../styles/CardapioStyle/Cardapio.module.sass";
 import products from "../../../__test/produtos";
 
@@ -14,7 +14,6 @@ export default function Cardapio() {
     return newList.map((item, index) => (
       <>
       <li>
-        <div className={style.flex}>
           <div className={style.cardapio} key={index}>
             {item.image ? (
               <div className={style.containerItens}>
@@ -39,14 +38,12 @@ export default function Cardapio() {
             ) : ( <></>)}
             <span />
           </div>
-        </div>
       </li>
       </>
     ));
   };
 
   return (
-    <>
       <div className={style.container}>
         <div className={style.subContainerMenu}>
           <div className={style.flex}>
@@ -101,6 +98,5 @@ export default function Cardapio() {
           </div>
         </div>
       </div>
-    </>
   );
 }
