@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "prebuild": "bun install",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
