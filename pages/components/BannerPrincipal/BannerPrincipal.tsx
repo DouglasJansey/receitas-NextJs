@@ -55,6 +55,13 @@ export default function BannerPrincipal() {
             style={{ transform: `translateX(${moveX}px)` }}
             ref={containerRef}
           >
+            <span className={style.containerTextoInfo}>
+              <h2 className={style.textTitle}>{banner.titulo}</h2>
+              <h5 className={style.text}>{banner.descricao}</h5>
+              <Link className={style.linkRouter} href={"/index/pedido"}>
+                Monte o seu!
+              </Link>
+            </span>
             <div className={style.backgroundLeft}>
               <img src={banner.imageLeft} alt="" />
             </div>
@@ -62,13 +69,6 @@ export default function BannerPrincipal() {
               <img src={banner.middleImg} alt="" />
             </span>
             <div className={style.backgroundRight}>
-              <span className={style.containerTextoInfo}>
-                <h2 className={style.textTitle}>{banner.titulo}</h2>
-                <h5 className={style.text}>{banner.descricao}</h5>
-                <Link className={style.linkRouter} href={"/index/cardapio"}>
-                  Monte o seu!
-                </Link>
-              </span>
               <img
                 src={banner.imageRight}
                 alt=""
