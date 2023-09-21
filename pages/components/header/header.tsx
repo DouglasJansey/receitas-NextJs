@@ -4,12 +4,11 @@ import Link from "next/link";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { AuthContext } from "../../../contexts/authContext";
 import style from "../../../styles/HeaderStyle/Header.module.sass";
 import { useRouter } from "next/router";
 
 export default function Header() {
-  const { isAuthtenticated } = useContext(AuthContext);
+  const  isAuthtenticated  = false;
   const { pathname } = useRouter();
   const newarr = pathname.split("/").includes("cardapio");
 

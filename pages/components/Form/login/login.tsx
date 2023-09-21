@@ -3,11 +3,10 @@ import { FormEvent, useContext, useState } from "react";
 import Link from "next/link";
 import style from "../../../../styles/LoginStyle/Login.module.sass";
 import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
-import { AuthContext } from "../../../../contexts/authContext";
 import Register from "../register/register";
 
 export default function Login() {
-  const { signIn } = useContext(AuthContext);
+  const  signIn = false;
   const [register, setRegister] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -21,7 +20,6 @@ export default function Login() {
   };
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
-    await signIn(formData);
   };
   const SavePassword = (ev: any) => {
     const {checked} = ev.target

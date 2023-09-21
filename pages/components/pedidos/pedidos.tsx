@@ -1,19 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ElementType, ReactNode, useContext, useState } from 'react';
 import style from '../../../styles/PedidoStyle/Pedido.module.sass';
 import Complement from './Complements/complement'
 import React from 'react';
 import AcaiOption from './AcaiOption/acaiOption';
+import { OrderContext } from '../../../contexts/orderContext';
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
-    const [count, setCount] = useState(0);
+    const {count, setCount, isChecked} = useContext(OrderContext);
+    
+    const handlePagesOptions = (num?: number): ReactNode => { 
+        let pageCount = num;
+        const page = {
+            0:  <AcaiOption />,
+            1:  <Complement />,     
+        }
+        return page[pageCount as keyof typeof page] 
+    }
 
     function handleDisable(index: number): boolean {
         const num = count
         if (index > num) return true
         return false
     }
+    function handleChangePage(e: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number): void {
+        setCount(index)
+    }
+
     return (
         <div className={style.container}>
             <div className={style.containerIcons}>
@@ -22,6 +36,7 @@ export default function Pedidos() {
                         <input className={style.inputstyle} type='checkbox'
                             name={icon} id={icon}
                             disabled={handleDisable(index)} checked={index <= count}
+                            onClick={(e) => handleChangePage(e, index)}
                         />
                         <label htmlFor={icon} className={style.labelstyle}>
                             <img src={`/images/icons/${icon.toLowerCase()}.png`} alt="" />
@@ -31,7 +46,7 @@ export default function Pedidos() {
                 ))}
             </div>
             <div className={style.containeroptions}>
-                <AcaiOption />
+                {handlePagesOptions(count)}
                 {
                     <button type='button'
                         onClick={() => count <= 3 ? setCount(count + 1) : ''}
