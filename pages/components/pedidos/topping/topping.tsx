@@ -9,7 +9,7 @@ type ComplementType = {
     props: {}
 }
 
-export default function topping() {
+export default function Topping() {
     const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
     const { order, setOrder, saveChecked, page, changePageAndCheck, count, setNameProps, name } = useContext(OrderContext);
 
