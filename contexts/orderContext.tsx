@@ -55,7 +55,6 @@ export const OrderContextProvider = ({children}: orderContextProps) => {
             setCart(newCart)
         }
     },[])
-    console.log(cart)
     function saveChecked(item: string, name?: string) {
         const nameObj = name ? order[name as keyof typeof order] //pega o valor dentro do objeto tigela ou fruta
         : order[item as keyof typeof order]
