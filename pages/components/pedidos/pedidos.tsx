@@ -6,6 +6,7 @@ import React from 'react';
 import AcaiOption from './AcaiOption/acaiOption';
 import Topping from './topping/topping';
 import FruitOption from './FruitOption/fruitOption';
+import Plus from './PlusComplement/Plus'
 import { OrderContext } from '../../../contexts/orderContext';
 
 export default function Pedidos() {
@@ -19,6 +20,7 @@ export default function Pedidos() {
             1:  <Complement />,     
             2:  <Topping />,     
             3:  <FruitOption />,     
+            4:  <Plus />,     
         }
         return page[pageCount as keyof typeof page] 
     }

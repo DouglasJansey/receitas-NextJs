@@ -1,21 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
+import React from 'react';
 import { ChangeEvent, useContext, useState } from 'react';
 import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
-import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import produtos from '../../../../__test/produtos';
 
 type ComplementType = {
     props: {}
 }
 
-export default function Topping() {
-    const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
+export default function Plus() {
     const { order, setOrder, saveChecked, page, changePageAndCheck, count, setNameProps, name } = useContext(OrderContext);
-
+    const plus = produtos.filter(item => item.tipo === "adicional")
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        setOrder({ ...order, [name]: value })
+        setNameProps(name);
+        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: value })
+            : setOrder({ ...order, [name]: "" })
     }
     function handlerButtonNext({ props }: ComplementType) {
         const buttonVisible = order[props as keyof typeof order]
@@ -23,25 +25,25 @@ export default function Topping() {
     }
     return (
         <div className={style.containeroptions}>
-            <p>Escolha o sua Cobertura</p>
+            <p>Escolha o seu Adicionais</p>
             <div className={style.containeroptions}>
                 <div className={style.containerSizes}>
                     {
-                        complement.map((item: string, index: number) => (
+                        plus.map((item, index) => (
                             <div className={style.bowlcards} key={index + 3}>
-                                <input className={style.inputstyle} type='radio' name="topping" id={item} value={saveChecked(item)}
+                                <input className={style.inputstyle} type='checkbox' name={item.nome} id={item.nome} value={saveChecked(item.nome)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={!!(order["topping" as keyof typeof order] === item)} />
-                                <label htmlFor={item} className={style.labelstyle}>
-                                    <p className={style.text}>{item}</p>
+                                    checked={!!(order[item.nome as keyof typeof order] === item.nome)} />
+                                <label htmlFor={item.nome} className={style.labelstyle}>
+                                    <p className={style.text}>{item.nome}</p>
                                 </label>
                             </div>
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: "topping" }) ?
+                {handlerButtonNext({ props: "" }) ?
                     <Button
-                        onClick={() => page <= count ? changePageAndCheck(3) : ''}
+                        onClick={() => page <= count ? '' : ''}
                         className={style.buttonNext} >
                         Proximo
                     </Button> : ''}
