@@ -23,6 +23,8 @@ export default function Plus() {
         const buttonVisible = order[props as keyof typeof order]
         return buttonVisible ? true : false
     }
+    console.log()
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seus itens adicionais</p>

@@ -4,6 +4,7 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { setCookie } from 'nookies'
 
 type ButtonType = {
     tigela: string,
@@ -18,6 +19,11 @@ export default function AcaiOption() {
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
         setOrder({ ...order, [name]: value })
+        const newOrder = JSON.stringify(order).trim();
+        setCookie(null, "ORDER_VALUES", newOrder, {
+            path: "/",
+            maxAge: 60 * 60 * 1
+        })
     }
     function handlerButtonNext({tigela, fruta}: ButtonType){
        const nameTigela = order[tigela as keyof typeof order];
