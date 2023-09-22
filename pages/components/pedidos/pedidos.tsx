@@ -41,6 +41,7 @@ export default function Pedidos() {
                         <input className={style.inputstyle} type='checkbox'
                             name={icon} id={icon}
                             disabled={handleDisable(index)} checked={index <= count}
+                            readOnly
                             onClick={(e) => handleChangePage(e, index)}
                         />
                         <label htmlFor={icon} className={style.labelstyle}>
