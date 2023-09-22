@@ -50,10 +50,12 @@ export const OrderContextProvider = ({children}: orderContextProps) => {
     }
     useEffect(() => {
         const cookies = parseCookies()
-        const newCart = JSON.parse(cookies.CART_COOKIE)
-        setCart(newCart)
+        if(cookies.CART_COOKIE) {
+            const newCart = JSON.parse(cookies.CART_COOKIE)
+            setCart(newCart)
+        }
     },[])
-
+    console.log(cart)
     function saveChecked(item: string, name?: string) {
         const nameObj = name ? order[name as keyof typeof order] //pega o valor dentro do objeto tigela ou fruta
         : order[item as keyof typeof order]
