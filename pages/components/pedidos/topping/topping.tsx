@@ -9,15 +9,13 @@ type ComplementType = {
     props: {}
 }
 
-export default function Complement() {
-    const complement = ['Granola', 'Paçoca', 'Amendoim', 'Cereal', 'Aveia', 'Granulado', 'Leite em pó', 'Choco Ball', 'Jujuba', 'Confetti', 'Chantilly', 'Biscoito']
+export default function topping() {
+    const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
     const { order, setOrder, saveChecked, page, changePageAndCheck, count, setNameProps, name } = useContext(OrderContext);
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        setNameProps(name);
-        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: value })
-            : setOrder({ ...order, [name]: "" })
+        setOrder({ ...order, [name]: value })
     }
     function handlerButtonNext({ props }: ComplementType) {
         const buttonVisible = order[props as keyof typeof order]
@@ -31,9 +29,9 @@ export default function Complement() {
                     {
                         complement.map((item: string, index: number) => (
                             <div className={style.bowlcards} key={index + 3}>
-                                <input className={style.inputstyle} type='checkbox' name={item} id={item} value={saveChecked(item)}
+                                <input className={style.inputstyle} type='radio' name="topping" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={order[item as keyof typeof order] ? true : false} />
+                                    checked={!!(order["topping" as keyof typeof order] === item)} />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <p className={style.text}>{item}</p>
                                 </label>
@@ -41,9 +39,9 @@ export default function Complement() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: name }) ?
+                {handlerButtonNext({ props: "topping" }) ?
                     <Button
-                        onClick={() => page <= count ? changePageAndCheck(2) : ''}
+                        onClick={() => page <= count ? changePageAndCheck(3) : ''}
                         className={style.buttonNext} >
                         Proximo
                     </Button> : ''}
