@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useState } from "react";
+
 type orderContextType = {
     order: object
     count: number
@@ -35,7 +36,6 @@ export const OrderContextProvider = ({children}: orderContextProps) => {
     const [count, setCount] = useState(initialValue.count)
     const [page, setPage] = useState(initialValue.page)
     const [name, setNameProps] = useState(initialValue.name)
-
 
     const contextObj = { order, count,name,setNameProps, setCount, setOrder, saveChecked, changePageAndCheck, page, setPage}
 
