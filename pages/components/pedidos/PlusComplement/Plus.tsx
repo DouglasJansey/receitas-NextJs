@@ -25,7 +25,7 @@ export default function Plus() {
     }
     return (
         <div className={style.containeroptions}>
-            <p>Escolha o seu Adicionais</p>
+            <p>Escolha o seus itens adicionais</p>
             <div className={style.containeroptions}>
                 <div className={style.containerSizes}>
                     {
@@ -36,6 +36,7 @@ export default function Plus() {
                                     checked={!!(order[item.nome as keyof typeof order] === item.nome)} />
                                 <label htmlFor={item.nome} className={style.labelstyle}>
                                     <p className={style.text}>{item.nome}</p>
+                                    <h5>R$: {item.preco?.toFixed(2)}</h5>
                                 </label>
                             </div>
                         ))
