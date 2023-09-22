@@ -23,6 +23,7 @@
 .containerIcons
     @extend .flex
     gap: 1%
+    width: 85%
     padding: 5px
     @media( max-width: 850px)
         width: 100%            
@@ -82,11 +83,13 @@
 
 .text
     text-align: center
-    font-size: 0.8rem
+    font-size: 100%
     font-family: $roboto
     margin: 0
     padding: 0
     z-index: 2
+    @media (max-width: 530px)
+        font-size: 70%
    
 .inputstyle
     position: absolute
@@ -108,7 +111,7 @@
     align-items: center
     z-index: 2
     padding: 5px
-    font-size: .7rem
+    font-size: 65%
     width: 100%
     height: 100%
     cursor: pointer

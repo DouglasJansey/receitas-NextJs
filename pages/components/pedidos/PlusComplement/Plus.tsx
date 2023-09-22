@@ -5,13 +5,14 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
 import produtos from '../../../../__test/produtos';
+import { setCookie, parseCookies } from 'nookies';
 
 type ComplementType = {
     props: {}
 }
 
 export default function Plus() {
-    const { order, setOrder, saveChecked, page, changePageAndCheck, count, setNameProps, name } = useContext(OrderContext);
+    const { order, setOrder, saveChecked, page, cart, count, setNameProps, name } = useContext(OrderContext);
     const plus = produtos.filter(item => item.tipo === "adicional")
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -23,7 +24,15 @@ export default function Plus() {
         const buttonVisible = order[props as keyof typeof order]
         return buttonVisible ? true : false
     }
-    console.log()
+  
+    function addCart(order: {}){
+        const addCart = JSON.stringify(order).split(' ').join('')
+        setCookie(null, 'CART_COOKIE', addCart,{
+            path: '/',
+            maxAge: 60 * 60 * 1
+        })
+    }
+
 
     return (
         <div className={style.containeroptions}>
@@ -44,11 +53,11 @@ export default function Plus() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: "" }) ?
+                {handlerButtonNext({ props: name }) ?
                     <Button
-                        onClick={() => page <= count ? '' : ''}
+                        onClick={() => page <= count ? addCart(order) : ''}
                         className={style.buttonNext} >
-                        Proximo
+                        Adicionar na Sacola
                     </Button> : ''}
             </div>
         </div>

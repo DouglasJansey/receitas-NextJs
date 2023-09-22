@@ -13,8 +13,8 @@ const Banner = [{
         descricao:`Se você gosta do seu Açaí batido com Banana,
         nós temos o que você procura.`
     },{
-        imageLeft:"https://img.freepik.com/fotos-premium/imagens-de-fundo-abstrato-papel-de-parede-gerado-por-ai_643360-38556.jpg",
-        imageRight:"https://img.freepik.com/fotos-premium/fundo-amarelo-pastel-com-textura-de-aquarela_199112-2066.jpg?w=2000",
+        imageLeft:"/images/bgRoxo.jpg",
+        imageRight:"/images/bgAmareloFolhas.jpg",
         middleImg:"images/umlitro.png",
         titulo:"Do tamanho da sua vontade",
         descricao:`Se você gosta de quantidade,
