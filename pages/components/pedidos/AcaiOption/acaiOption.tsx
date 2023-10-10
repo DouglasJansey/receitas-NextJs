@@ -1,30 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useContext } from 'react';
 import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
-import { setCookie } from 'nookies'
 
-type ButtonType = {
-    tigela: string,
-    fruta: string,
-}
 
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck } = useContext(OrderContext)
+    const { order, setOrder, saveChecked, page, changePageAndCheck,editItensCart, newArr, numberClient } = useContext(OrderContext)
+    const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
-        const { value, name } = e.target
-        setOrder({ ...order, [name]: value })
+        const { value, name } = e.target  
+        arrayIndex && editItensCart(name, value)
+        return setOrder({ ...order, [name]: value })
 
     }
-    function handlerButtonNext({tigela, fruta}: ButtonType){
-       const nameTigela = order[tigela as keyof typeof order];
-       const nameFruta = order[fruta as keyof typeof order];
-       return (nameTigela && nameFruta) ? true : false
+    function handlerButtonNext(tigela: string, fruta: string): boolean {
+
+        const nameTigela = !arrayIndex ? order[tigela as keyof typeof order]
+            : arrayIndex[tigela as keyof typeof arrayIndex]
+
+        const nameFruta = !arrayIndex ? order[tigela as keyof typeof order]
+            : arrayIndex[fruta as keyof typeof arrayIndex]
+        console.log(nameTigela, nameFruta)
+        return (nameTigela && nameFruta) ? true : false
+    }
+    function checkCart(item: string, name: string, arr: object) {
+       return !arr ? !!(order[name as keyof typeof order] === item) 
+       : !!(arr && arr[name as keyof typeof arr] === item)    
     }
     return (
         <div className={style.containeroptions}>
@@ -36,7 +42,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='radio' name="tigela" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={!!(order["tigela" as keyof typeof order] === item)}
+                                    checked={checkCart(item, "tigela", arrayIndex)}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/tigela.png`} alt="" />
@@ -55,7 +61,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="fruta" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={!!(order["fruta" as keyof typeof order] === item)}
+                                    checked={checkCart(item, "fruta", arrayIndex)}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />
@@ -65,10 +71,11 @@ export default function AcaiOption() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({tigela: "tigela", fruta: "fruta"}) ? 
-                <Button 
-                onClick={() => page <= 3 ? changePageAndCheck(1): ''}
-                className={style.buttonNext} >Proximo</Button> : ''}
+                {}
+                <Button
+                        onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
+                        className={style.buttonNext} 
+                        >Proximo</Button>
             </div>
         </div>
     )

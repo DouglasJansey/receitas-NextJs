@@ -11,16 +11,22 @@ type ButtonType = {
 
 export default function FruitOption() {
     const fruit = ["Morango", "Banana", "Manga"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck } = useContext(OrderContext)
+    const { order, setOrder, saveChecked, page, changePageAndCheck, newArr, numberClient, editItensCart } = useContext(OrderContext)
+    const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
+        arrayIndex && editItensCart(name, value)
         setOrder({ ...order, [name]: value })
     }
     function handlerButtonNext({fruta}: ButtonType){
        const nameFruta = order[fruta as keyof typeof order];
        return (nameFruta) ? true : false
     }
+    function checkCart(item: string, name: string, arr: object) {
+        return !arr ? !!(order[name as keyof typeof order] === item) 
+        : !!(arr && arr[name as keyof typeof arr] === item)    
+     }
     return (
         <div className={style.containeroptions}>
             <p>Escolha sua fruta</p>
@@ -31,7 +37,7 @@ export default function FruitOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="frutas" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={!!(order["frutas" as keyof typeof order] === item)}
+                                    checked={checkCart(item, "frutas", arrayIndex)}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />
@@ -44,7 +50,8 @@ export default function FruitOption() {
                 {handlerButtonNext({fruta: "frutas"}) ? 
                 <Button 
                 onClick={() => page <= 3 ? changePageAndCheck(4): ''}
-                className={style.buttonNext} >Proximo</Button> : ''}
+                className={style.buttonNext}
+                 >Proximo</Button> : ''}
             </div>
         </div>
     )

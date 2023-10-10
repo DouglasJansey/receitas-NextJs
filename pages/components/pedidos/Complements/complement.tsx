@@ -11,18 +11,40 @@ type ComplementType = {
 
 export default function Complement() {
     const complement = ['Granola', 'Paçoca', 'Amendoim', 'Cereal', 'Aveia', 'Granulado', 'Leite em pó', 'Choco Ball', 'Jujuba', 'Confetti', 'Chantilly', 'Biscoito']
-    const { order, setOrder, saveChecked, page, changePageAndCheck, count, setNameProps, name } = useContext(OrderContext);
+    const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart,
+    numberClient, count, setNameProps, name, newArr } = useContext(OrderContext);
+    const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
+        const boolValue = (value === name || value === false) ? true : false
+        arrayIndex && editItensCart(name, boolValue)
         setNameProps(name);
-        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: value })
-            : setOrder({ ...order, [name]: "" })
+        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: !!value })
+            : setOrder({ ...order, [name]: false })
     }
     function handlerButtonNext({ props }: ComplementType) {
-        const buttonVisible = order[props as keyof typeof order]
-        return buttonVisible ? true : false
+        const valuesTrue: boolean[] = []
+        const orderLength = Object.values(order)
+        if (orderLength) {
+            for (let i in order) {
+                if (order[i as keyof typeof order] === true) valuesTrue.push(order[i as keyof typeof order])
+            }
+        }
+        complement.forEach((item) => {
+            for (let i in arrayIndex) {
+                if (i === item && arrayIndex[i as keyof typeof arrayIndex] === true) {
+                    valuesTrue.push(arrayIndex[i as keyof typeof arrayIndex])
+                }
+            }
+        })
+        return valuesTrue.length > 0 ? true : false
     }
+    function checkCart(item: string, arr: object) {
+        return !arr ? (order[item as keyof typeof order] === true)
+            : (arr && arr[item as keyof typeof arr] === true)
+    }
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Complemento</p>
@@ -32,8 +54,8 @@ export default function Complement() {
                         complement.map((item: string, index: number) => (
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='checkbox' name={item} id={item} value={saveChecked(item)}
-                                    onChange={(e) => handleChangeInputValue(e)}
-                                    checked={order[item as keyof typeof order] ? true : false} />
+                                    onChange={(e) => handleChangeInputValue(e)} readOnly
+                                    checked={checkCart(item, arrayIndex)} />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <p className={style.text}>{item}</p>
                                 </label>
@@ -44,7 +66,7 @@ export default function Complement() {
                 {handlerButtonNext({ props: name }) ?
                     <Button
                         onClick={() => page <= count ? changePageAndCheck(2) : ''}
-                        className={style.buttonNext} >
+                        className={style.buttonNext}>
                         Proximo
                     </Button> : ''}
             </div>

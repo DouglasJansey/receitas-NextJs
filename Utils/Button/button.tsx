@@ -7,7 +7,9 @@ type ButtonType = {
 }
 export const Button = ({onClick, children, className }: ButtonType) => {
     return(
-        <button className={className} onClick={(e) => onClick(e)}>{children}</button>
+        <button className={className} 
+        onClick={(e) => onClick(e)}
+        >{children}</button>
     )
 }
 export default Button;

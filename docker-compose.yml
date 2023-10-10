@@ -1,9 +1,16 @@
+version: '3.3'
 services:
-  image: node
-  command: bun install && bun run dev
-container_image: nodeJS
-ports: 3000
-volumes:
-- .:/usr/src/app
-
-restart: always
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: akjon22dx
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - /local/mysql/torquatoacai:/var/lib/mysql

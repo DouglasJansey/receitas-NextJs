@@ -6,11 +6,11 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 import style from "../../../styles/HeaderStyle/Header.module.sass";
 import { useRouter } from "next/router";
+import { AuthContext } from "../../../contexts/authContext";
 
 export default function Header() {
-  const  isAuthtenticated  = false;
+  const { isAuthenticated } = useContext(AuthContext)
   const { pathname } = useRouter();
-  const newarr = pathname.split("/").includes("cardapio");
 
   const menu: Array<string> = [
     "Cardápio",
@@ -55,7 +55,7 @@ export default function Header() {
             ))}
           </nav>
           <div className={style.profile}>
-            {isAuthtenticated ? (
+            {isAuthenticated ? (
               <p>Perfil</p>
             ) : (
               <div>

@@ -4,9 +4,10 @@ import Link from "next/link";
 import style from "../../../../styles/LoginStyle/Login.module.sass";
 import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
 import Register from "../register/register";
+import { AuthContext } from "../../../../contexts/authContext";
 
 export default function Login() {
-  const  signIn = false;
+  const { SignIn } = useContext(AuthContext)
   const [register, setRegister] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -20,11 +21,11 @@ export default function Login() {
   };
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
+    await SignIn(formData)
   };
   const SavePassword = (ev: any) => {
     const {checked} = ev.target
     setFormData({...formData, ["savePassword"]: checked})
-    console.log(checked)
   };
 
   return (
@@ -76,7 +77,8 @@ export default function Login() {
                     onChange={(e) => SavePassword(e)}/>
                   <p className={style.text}>Lembrar minha senha</p>
                 </span>
-                <button className={style.submitBotton}>Entrar</button>
+                <button type="submit" className={style.submitBotton}
+                >Entrar</button>
               </form>
             </>
           )}

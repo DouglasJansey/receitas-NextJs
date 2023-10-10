@@ -5,35 +5,35 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
 import produtos from '../../../../__test/produtos';
-import { setCookie, parseCookies } from 'nookies';
-
-type ComplementType = {
-    props: {}
-}
 
 export default function Plus() {
-    const { order, setOrder, saveChecked, page, cart, count, setNameProps, name } = useContext(OrderContext);
+    const { order, setOrder, saveChecked,setPage, page,setCount, count,cart, setCart, 
+    setNameProps, numberClient, setNumberClient, newArr, editItensCart } = useContext(OrderContext);
     const plus = produtos.filter(item => item.tipo === "adicional")
+    const arrayIndex = newArr[numberClient]
+    
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
+        const boolValue = (value === name || value === false) ? true : false
+       arrayIndex && editItensCart(name, boolValue)
         setNameProps(name);
-        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: value })
-            : setOrder({ ...order, [name]: "" })
-    }
-    function handlerButtonNext({ props }: ComplementType) {
-        const buttonVisible = order[props as keyof typeof order]
-        return buttonVisible ? true : false
-    }
-  
+        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: !!value })
+            : setOrder({ ...order, [name]: false })
+    }  
     function addCart(order: {}){
-        const addCart = JSON.stringify(order).split(' ').join('')
-        setCookie(null, 'CART_COOKIE', addCart,{
-            path: '/',
-            maxAge: 60 * 60 * 1
-        })
+        !arrayIndex && setCart({...cart, [numberClient]:order})
+       if(numberClient >= 4){
+          return setNumberClient(0)
+       }
+       setOrder({})
+       setNumberClient(numberClient + 1)
+       setCount(0)
+       setPage(0)        
     }
-
-
+    function checkCart(item: string, arr: object) {
+        return !arr ? (order[item as keyof typeof order] === true)
+            : (arr && arr[item as keyof typeof arr] === true)
+    }
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seus itens adicionais</p>
@@ -44,7 +44,7 @@ export default function Plus() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='checkbox' name={item.nome} id={item.nome} value={saveChecked(item.nome)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={!!(order[item.nome as keyof typeof order] === item.nome)} />
+                                    checked={checkCart(item.nome, arrayIndex)} />
                                 <label htmlFor={item.nome} className={style.labelstyle}>
                                     <p className={style.text}>{item.nome}</p>
                                     <h5>R$: {item.preco?.toFixed(2)}</h5>
@@ -53,12 +53,11 @@ export default function Plus() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: name }) ?
                     <Button
                         onClick={() => page <= count ? addCart(order) : ''}
                         className={style.buttonNext} >
                         Adicionar na Sacola
-                    </Button> : ''}
+                    </Button>
             </div>
         </div>
     )

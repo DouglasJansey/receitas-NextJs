@@ -6,6 +6,109 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Client {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  email String @unique @db.VarChar(50)
+  password String @db.VarChar(255)
+  endereco Endereco[]
+  telefone Telefone[]
+  pedido Pedido[]
+  acai Acai[]
+  createdAt DateTime @default(now())
+  updateddAt DateTime @default(now())
+}
+
+model Endereco {
+  id Int @id @default(autoincrement())
+  rua String @db.VarChar(150)
+  bairro String @db.VarChar(50)
+  numero Int 
+  active Boolean @default(false)
+  complemento String? @db.VarChar(50) 
+  referencia String @db.VarChar(50)
+  client Client @relation(fields: [clientId], references: [id])
+  clientId Int
+  createdAt DateTime @default(now())
+  updateddAt DateTime @default(now())
+}
+
+model Telefone {
+  id Int @id @default(autoincrement())
+  ddd Int
+  numero Int
+  active Boolean @default(false)
+  client Client @relation(fields: [clientId], references: [id])
+  clientId Int 
+  createdAt DateTime @default(now())
+  updateddAt DateTime @default(now())
+}
+
+model Acai {
+  id Int @id @default(autoincrement())
+  tamanho String @db.VarChar(50)
+  batido String @db.VarChar(50)
+  fruta String? @db.VarChar(50)
+  cobertura String? @db.VarChar(50)
+  client Client @relation(fields: [clientId], references: [id])
+  clientId Int
+  complemento Complemento[]
+  adicional Adicional[]
+  quantity Int
+  createdAt DateTime @default(now())
+  updateddAt DateTime @default(now())
+}
+
+model Complemento {
+  id Int @id @default(autoincrement())
+  acai Acai @relation(fields: [acaiId], references: [id])
+  acaiId Int @unique
+  granola Boolean? @default(false)
+  pacoca Boolean? @default(false)
+  amendoim Boolean? @default(false)
+  cereal Boolean? @default(false)
+  aveia Boolean? @default(false)
+  granulado Boolean? @default(false)
+  leiteEmPo Boolean? @default(false)
+  chocoBall Boolean? @default(false)
+  jujuba Boolean? @default(false)
+  confetti Boolean? @default(false)
+  chantilly Boolean? @default(false)
+  biscoito Boolean? @default(false)
+}
+
+model Adicional {
+  id Int @id @default(autoincrement())
+  acai Acai @relation(fields: [acaiId], references: [id])
+  acaiId Int @unique
+  nutella Boolean? @default(false)
+  ovomaltine Boolean? @default(false)
+  bis Boolean? @default(false)
+  banana Boolean? @default(false)
+  morango Boolean? @default(false)
+  manga Boolean? @default(false)
+  leiteCondensado Boolean? @default(false)
+}
+
+model Pagamento {
+  id Int @id @default(autoincrement())
+  dinheiro Boolean? @default(false)
+  cartao Boolean? @default(false)
+  troco String?
+  pedido Pedido?
+}
+
+model Pedido {
+  id Int @id @default(autoincrement())
+  client Client @relation(fields: [clientId], references: [id])
+  clientId Int @unique
+  pagamento Pagamento @relation(fields: [pagamentoId], references: [id])
+  pagamentoId Int @unique
+  status String
+  createdAt DateTime @default(now())
+  updateddAt DateTime @default(now())
 }
