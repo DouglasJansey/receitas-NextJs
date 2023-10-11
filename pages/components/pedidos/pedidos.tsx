@@ -12,7 +12,7 @@ import { setCookie } from 'nookies';
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
-    const { count, page, setPage, setNumberClient, numberClient, newArr } = useContext(OrderContext);
+    const { count, page, setPage, setNumberClient, numberClient, newArr, setOrder } = useContext(OrderContext);
     const numberOrder = ["1", "2", "3", "4"];
     const arrayIndex = newArr[numberClient]
     const [orderNumber, setOrderNumber] = useState()
@@ -30,12 +30,24 @@ export default function Pedidos() {
     }
 
     function handleDisable(index: number): boolean {
-        let num = count
-        if (index <= num) return false
+        let num = count     
+        if(arrayIndex && arrayIndex["check" as keyof typeof arrayIndex]) {
+            return false
+        }else{
+            if (index <= num) return false
+        }
         return true
     }
     function handleChangePage(e: React.MouseEvent<HTMLDivElement, MouseEvent> | any, index: number): void {
         if (index !== page) setPage(index)
+    }
+    function handleCheckedOptionS(index: number){
+        const valueCheck = arrayIndex && !!arrayIndex['check' as keyof typeof arrayIndex]
+        return !arrayIndex ? !!(index <= count) : valueCheck
+    }
+    if(!arrayIndex) {
+        setPage(count)
+        setOrder({})
     }
      if(newArr.length >= 1) {
          const cartCookie = JSON.stringify(newArr);
@@ -48,7 +60,7 @@ export default function Pedidos() {
                     <div className={style.optionscard} key={index + 2}>
                         <input className={style.inputstyle} type='checkbox'
                             name={icon} id={icon}
-                            disabled={handleDisable(index)} checked={!!(index <= count)}
+                            disabled={handleDisable(index)} checked={handleCheckedOptionS(index)}
                             readOnly
                             onClick={(e) => handleChangePage(e, index)}
                         />

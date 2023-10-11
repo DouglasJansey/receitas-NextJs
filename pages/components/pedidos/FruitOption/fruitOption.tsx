@@ -11,7 +11,7 @@ type ButtonType = {
 
 export default function FruitOption() {
     const fruit = ["Morango", "Banana", "Manga"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck, newArr, numberClient, editItensCart } = useContext(OrderContext)
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, numberClient, editItensCart } = useContext(OrderContext)
     const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
@@ -23,10 +23,7 @@ export default function FruitOption() {
        const nameFruta = order[fruta as keyof typeof order];
        return (nameFruta) ? true : false
     }
-    function checkCart(item: string, name: string, arr: object) {
-        return !arr ? !!(order[name as keyof typeof order] === item) 
-        : !!(arr && arr[name as keyof typeof arr] === item)    
-     }
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha sua fruta</p>
@@ -37,7 +34,7 @@ export default function FruitOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="frutas" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, "frutas", arrayIndex)}
+                                    checked={checkCart(item, arrayIndex, "frutas")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />

@@ -11,7 +11,7 @@ type ComplementType = {
 
 export default function Topping() {
     const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
-    const { order, setOrder, saveChecked, page, changePageAndCheck, count, editItensCart, numberClient, newArr } = useContext(OrderContext);
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, editItensCart, numberClient, newArr } = useContext(OrderContext);
     const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
@@ -23,10 +23,7 @@ export default function Topping() {
         const buttonVisible = order[props as keyof typeof order]
         return buttonVisible ? true : false
     }
-    function checkCart(item: string, name: string, arr: object) {
-        return !arr ? !!(order[name as keyof typeof order] === item) 
-        : !!(arr && arr[name as keyof typeof arr] === item)    
-     }
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha o sua Cobertura</p>
@@ -37,7 +34,7 @@ export default function Topping() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='radio' name="topping" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, "topping", arrayIndex)} />
+                                    checked={checkCart(item, arrayIndex, "topping")} />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <p className={style.text}>{item}</p>
                                 </label>

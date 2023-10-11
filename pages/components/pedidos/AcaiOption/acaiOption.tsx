@@ -1,15 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, ChangeEventHandler, useContext } from 'react';
-import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
+import { ChangeEvent, useContext } from 'react';
+import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
-
 
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck,editItensCart, newArr, numberClient } = useContext(OrderContext)
+    const { order, setOrder, saveChecked, page, changePageAndCheck,editItensCart, newArr,checkCart, numberClient } = useContext(OrderContext)
     const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
@@ -28,10 +27,6 @@ export default function AcaiOption() {
         console.log(nameTigela, nameFruta)
         return (nameTigela && nameFruta) ? true : false
     }
-    function checkCart(item: string, name: string, arr: object) {
-       return !arr ? !!(order[name as keyof typeof order] === item) 
-       : !!(arr && arr[name as keyof typeof arr] === item)    
-    }
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Tamanho</p>
@@ -42,7 +37,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='radio' name="tigela" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, "tigela", arrayIndex)}
+                                    checked={checkCart(item, arrayIndex, "tigela")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/tigela.png`} alt="" />
@@ -61,7 +56,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="fruta" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, "fruta", arrayIndex)}
+                                    checked={checkCart(item, arrayIndex, "fruta")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />

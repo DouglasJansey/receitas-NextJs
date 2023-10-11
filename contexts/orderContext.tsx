@@ -10,6 +10,7 @@ type orderContextType = {
     name: object
     cart: object
     setCart: (state: any) => void
+    checkCart: (item: string, arr: object, name?: string) => boolean
     editItensCart: (name: string, value: any) => void
     setCount: (newState: number) => void
     setNumberClient: (newState: number) => void
@@ -35,7 +36,8 @@ const initialValue = {
     setNameProps: () => { },
     editItensCart: () => { },
     saveChecked: () => '',
-    changePageAndCheck: () => 0
+    changePageAndCheck: () => 0,
+    checkCart: () => false
 }
 type orderContextProps = {
     children: ReactNode;
@@ -56,7 +58,8 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     const [cart, setCart] = useState(cartArray && cartArray.concat(newArr) || [])
     const contextObj = {
         cart, order, count, name, setCart, numberClient, setNumberClient, editItensCart,
-        setNameProps, setCount, setOrder, saveChecked, changePageAndCheck, page, setPage, newArr
+        setNameProps, setCount, setOrder, saveChecked, changePageAndCheck, page, setPage, newArr,
+        checkCart
     }
 
     function changePageAndCheck(num: number) {
@@ -64,9 +67,9 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         setCount(num)
     }
     function editItensCart(name: string, value: any): string{ 
-        const arrayIndex = cart[numberClient as keyof typeof cart]
+        let arrayIndex: any = cart[numberClient as keyof typeof cart]
         for(let _ in cart){
-            arrayIndex[name as keyof typeof arrayIndex] = value
+            arrayIndex[name as keyof typeof arrayIndex] = !!value
         }
        return value
     }
@@ -77,14 +80,22 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
             newArr.splice(numberClient, 0, cart[numberClient])
         }
     }
-console.log(cart, newArr)
     function saveChecked(item: string, name?: string): any {
         let nameObj = name ? order[name as keyof typeof order] //pega o valor dentro do objeto tigela ou fruta
         : order[item as keyof typeof order]
         const value = nameObj ? nameObj : item
         return value
     }
-
+    function checkCart(item: string, arr: object, name?: string) {
+        const valueCheck = name ? name : item;
+        if(name === 'Complemento' || name === 'Adicional'){
+            return !arr ? order[item as keyof typeof order] 
+        : arr && arr[item as keyof typeof arr] 
+        }
+       return !arr ? !!(order[valueCheck as keyof typeof order] === item) 
+        : !!(arr && arr[valueCheck as keyof typeof arr] === item)   
+     }
+     
     return (
         <OrderContext.Provider value={contextObj}>
             {children}

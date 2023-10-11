@@ -12,17 +12,20 @@ type ComplementType = {
 export default function Complement() {
     const complement = ['Granola', 'Paçoca', 'Amendoim', 'Cereal', 'Aveia', 'Granulado', 'Leite em pó', 'Choco Ball', 'Jujuba', 'Confetti', 'Chantilly', 'Biscoito']
     const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart,
-    numberClient, count, setNameProps, name, newArr } = useContext(OrderContext);
+    numberClient, count, setNameProps, name, newArr, checkCart } = useContext(OrderContext);
     const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
         const boolValue = (value === name || value === false) ? true : false
-        arrayIndex && editItensCart(name, boolValue)
-        setNameProps(name);
-        !order[name as keyof typeof order] ? setOrder({ ...order, [name]: !!value })
+        if(page === 1){
+            arrayIndex && editItensCart(name, boolValue)
+            setNameProps(name);
+            !order[name as keyof typeof order] ? setOrder({ ...order, [name]: !!value })
             : setOrder({ ...order, [name]: false })
+        }
     }
+    console.log(arrayIndex)
     function handlerButtonNext({ props }: ComplementType) {
         const valuesTrue: boolean[] = []
         const orderLength = Object.values(order)
@@ -40,11 +43,6 @@ export default function Complement() {
         })
         return valuesTrue.length > 0 ? true : false
     }
-    function checkCart(item: string, arr: object) {
-        return !arr ? (order[item as keyof typeof order] === true)
-            : (arr && arr[item as keyof typeof arr] === true)
-    }
-
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Complemento</p>
@@ -55,7 +53,7 @@ export default function Complement() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='checkbox' name={item} id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)} readOnly
-                                    checked={checkCart(item, arrayIndex)} />
+                                    checked={checkCart(item, arrayIndex, 'Complemento')} />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <p className={style.text}>{item}</p>
                                 </label>
