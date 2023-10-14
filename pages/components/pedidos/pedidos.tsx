@@ -9,13 +9,15 @@ import FruitOption from './FruitOption/fruitOption';
 import Plus from './PlusComplement/Plus'
 import { OrderContext } from '../../../contexts/orderContext';
 import { setCookie } from 'nookies';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
-    const { count, page, setPage, setNumberClient, numberClient, newArr, setOrder } = useContext(OrderContext);
+    const { count, page, setPage, setNumberClient, numberClient, newArr, setCount, order } = useContext(OrderContext);
     const numberOrder = ["1", "2", "3", "4"];
-    const arrayIndex = newArr[numberClient]
-    const [orderNumber, setOrderNumber] = useState()
+    const arrayIndex = newArr && newArr[numberClient]
+    const arrayCheck = arrayIndex && arrayIndex['check' as keyof typeof arrayIndex];
+
 
     const handlePagesOptions = (num?: number): ReactNode => {
         let pageCount = num;
@@ -29,30 +31,30 @@ export default function Pedidos() {
         return page[pageCount as keyof typeof page]
     }
 
-    function handleDisable(index: number): boolean {
-        let num = count     
-        if(arrayIndex && arrayIndex["check" as keyof typeof arrayIndex]) {
-            return false
-        }else{
-            if (index <= num) return false
-        }
-        return true
+    function handleDisable(index: number){
+        let num = count 
+        return index <= num ? false : true
+        
     }
     function handleChangePage(e: React.MouseEvent<HTMLDivElement, MouseEvent> | any, index: number): void {
         if (index !== page) setPage(index)
     }
     function handleCheckedOptionS(index: number){
         const valueCheck = arrayIndex && !!arrayIndex['check' as keyof typeof arrayIndex]
-        return !arrayIndex ? !!(index <= count) : valueCheck
+        const isChecked = !arrayIndex ? !!(index <= count) : valueCheck
+        return isChecked
     }
-    if(!arrayIndex) {
-        setPage(count)
-        setOrder({})
-    }
-     if(newArr.length >= 1) {
-         const cartCookie = JSON.stringify(newArr);
-         setCookie(undefined, "COOKIE-CART", cartCookie)
-     }
+
+    useEffect(()=>{
+        if(!arrayIndex && page !== count) {
+            setPage(count)
+            setCount(0)
+        }
+         if(newArr.length >= 1 && order) {
+             const cartCookie = JSON.stringify(newArr);
+             setCookie(undefined, "COOKIE-CART", cartCookie)
+         }
+    },[numberClient, order])
     return (
         <div className={style.container}>
             <div className={style.containerIcons}>

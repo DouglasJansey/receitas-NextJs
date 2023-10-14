@@ -1,31 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ChangeEvent, useContext } from 'react';
 import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+type OptionsType = {
+    tigela: string
+    batido: string
+}
 
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck,editItensCart, newArr,checkCart, numberClient } = useContext(OrderContext)
+    const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart, newArr, checkCart, numberClient } = useContext(OrderContext)
     const arrayIndex = newArr[numberClient]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
-        const { value, name } = e.target  
+        const { value, name } = e.target
         arrayIndex && editItensCart(name, value)
         return setOrder({ ...order, [name]: value })
 
     }
-    function handlerButtonNext(tigela: string, fruta: string): boolean {
-
+    function handlerButtonNext({tigela, batido}: OptionsType):boolean {
         const nameTigela = !arrayIndex ? order[tigela as keyof typeof order]
-            : arrayIndex[tigela as keyof typeof arrayIndex]
+            : arrayIndex[tigela as keyof typeof arrayIndex];
 
-        const nameFruta = !arrayIndex ? order[tigela as keyof typeof order]
-            : arrayIndex[fruta as keyof typeof arrayIndex]
-        console.log(nameTigela, nameFruta)
-        return (nameTigela && nameFruta) ? true : false
+        const nameFruta = !arrayIndex ? order[batido as keyof typeof order]
+            : arrayIndex[batido as keyof typeof arrayIndex];
+        return (!!nameTigela && !!nameFruta) ? false : true
+        
     }
     return (
         <div className={style.containeroptions}>
@@ -54,9 +57,9 @@ export default function AcaiOption() {
                     {
                         fruit.map((item: string, index: number) => (
                             <div className={style.bowlcards} key={index + 4}>
-                                <input className={style.inputstyle} type='radio' name="fruta" id={item} value={saveChecked(item)}
+                                <input className={style.inputstyle} type='radio' name="batido" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, arrayIndex, "fruta")}
+                                    checked={checkCart(item, arrayIndex, "batido")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />
@@ -66,11 +69,13 @@ export default function AcaiOption() {
                         ))
                     }
                 </div>
-                {}
-                <Button
-                        onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
-                        className={style.buttonNext} 
-                        >Proximo</Button>
+                <div>
+                    <button
+                    onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
+                    className={style.buttonNext}
+                >Proximo
+                </button>
+                </div>
             </div>
         </div>
     )

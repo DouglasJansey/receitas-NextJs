@@ -19,9 +19,12 @@ export default function FruitOption() {
         arrayIndex && editItensCart(name, value)
         setOrder({ ...order, [name]: value })
     }
+   
     function handlerButtonNext({fruta}: ButtonType){
-       const nameFruta = order[fruta as keyof typeof order];
-       return (nameFruta) ? true : false
+       const nameFruta = !arrayIndex ? order[fruta as keyof typeof order]
+       : arrayIndex[fruta as keyof typeof arrayIndex];
+       console.log(nameFruta)
+       return (nameFruta) ? false : true
     }
 
     return (
@@ -44,11 +47,10 @@ export default function FruitOption() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({fruta: "frutas"}) ? 
-                <Button 
+                <button 
                 onClick={() => page <= 3 ? changePageAndCheck(4): ''}
                 className={style.buttonNext}
-                 >Proximo</Button> : ''}
+                 >Proximo</button>
             </div>
         </div>
     )

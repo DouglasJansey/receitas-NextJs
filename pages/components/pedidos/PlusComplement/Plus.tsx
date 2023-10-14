@@ -20,6 +20,9 @@ export default function Plus() {
         !order[name as keyof typeof order] ? setOrder({ ...order, [name]: !!value })
             : setOrder({ ...order, [name]: false })
     }  
+    function ButtonAbleNext(){
+        return true
+    }
     function addCart(order: {}){
         !arrayIndex && setCart({...cart, [numberClient]:{...order, check: true}})
        if(numberClient >= 4){
@@ -51,7 +54,8 @@ export default function Plus() {
                 </div>
                     <Button
                         onClick={() => page <= count ? addCart(order) : ''}
-                        className={style.buttonNext} >
+                        className={style.buttonNext} 
+                        disabled={ButtonAbleNext()}>
                         Adicionar na Sacola
                     </Button>
             </div>

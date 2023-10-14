@@ -25,7 +25,6 @@ export default function Complement() {
             : setOrder({ ...order, [name]: false })
         }
     }
-    console.log(arrayIndex)
     function handlerButtonNext({ props }: ComplementType) {
         const valuesTrue: boolean[] = []
         const orderLength = Object.values(order)
@@ -41,7 +40,7 @@ export default function Complement() {
                 }
             }
         })
-        return valuesTrue.length > 0 ? true : false
+        return valuesTrue.length > 0 ? false : true
     }
     return (
         <div className={style.containeroptions}>
@@ -61,12 +60,12 @@ export default function Complement() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: name }) ?
-                    <Button
+                <button
                         onClick={() => page <= count ? changePageAndCheck(2) : ''}
-                        className={style.buttonNext}>
+                        className={style.buttonNext}
+                        >
                         Proximo
-                    </Button> : ''}
+                    </button> 
             </div>
         </div>
     )

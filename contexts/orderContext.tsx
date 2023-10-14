@@ -63,13 +63,14 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     }
 
     function changePageAndCheck(num: number) {
+
         setPage(num)
         setCount(num)
     }
     function editItensCart(name: string, value: any): string{ 
         let arrayIndex: any = cart[numberClient as keyof typeof cart]
         for(let _ in cart){
-            arrayIndex[name as keyof typeof arrayIndex] = !!value
+            arrayIndex[name as keyof typeof arrayIndex] = value
         }
        return value
     }
@@ -91,11 +92,11 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         if(name === 'Complemento' || name === 'Adicional'){
             return !arr ? order[item as keyof typeof order] 
         : arr && arr[item as keyof typeof arr] 
+        }else{
+            return !arr ? !!(order[valueCheck as keyof typeof order] === item) 
+            : !!(arr && arr[valueCheck as keyof typeof arr] === item)   
         }
-       return !arr ? !!(order[valueCheck as keyof typeof order] === item) 
-        : !!(arr && arr[valueCheck as keyof typeof arr] === item)   
      }
-     
     return (
         <OrderContext.Provider value={contextObj}>
             {children}

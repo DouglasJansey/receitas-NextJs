@@ -6,7 +6,7 @@ import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
 
 type ComplementType = {
-    props: {}
+    props: string
 }
 
 export default function Topping() {
@@ -19,9 +19,12 @@ export default function Topping() {
         arrayIndex && editItensCart(name, value)
         setOrder({ ...order, [name]: value })
     }
+
     function handlerButtonNext({ props }: ComplementType) {
-        const buttonVisible = order[props as keyof typeof order]
-        return buttonVisible ? true : false
+        const buttonVisible = !arrayIndex ? !!order[props as keyof typeof order]
+        : !!arrayIndex[props as keyof typeof arrayIndex];
+
+        return buttonVisible ? false : true
     }
 
     return (
@@ -42,13 +45,12 @@ export default function Topping() {
                         ))
                     }
                 </div>
-                {handlerButtonNext({ props: "topping" }) ?
-                    <Button
+                    <button
                         onClick={() => page <= count ? changePageAndCheck(3) : ''}
                         className={style.buttonNext} 
                         >
                         Proximo
-                    </Button> : ''}
+                    </button> 
             </div>
         </div>
     )
