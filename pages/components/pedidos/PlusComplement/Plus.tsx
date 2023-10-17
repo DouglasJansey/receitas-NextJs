@@ -21,7 +21,7 @@ export default function Plus() {
             : setOrder({ ...order, [name]: false })
     }  
     function ButtonAbleNext(){
-        return true
+        return false
     }
     function addCart(order: {}){
         !arrayIndex && setCart({...cart, [numberClient]:{...order, check: true}})

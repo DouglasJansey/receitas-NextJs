@@ -6,12 +6,12 @@ import { AuthProvider } from "../contexts/authContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <OrderContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </OrderContextProvider>
-    </AuthProvider>
+      <AuthProvider>
+        <OrderContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </OrderContextProvider>
+      </AuthProvider>
   );
 }

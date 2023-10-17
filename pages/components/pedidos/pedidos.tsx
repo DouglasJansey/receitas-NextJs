@@ -1,23 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, ElementType, ReactNode, useContext, useEffect, useState } from 'react';
-import style from '../../../styles/PedidoStyle/Pedido.module.sass';
-import Complement from './Complements/complement'
 import React from 'react';
-import AcaiOption from './AcaiOption/acaiOption';
-import Topping from './topping/topping';
-import FruitOption from './FruitOption/fruitOption';
-import Plus from './PlusComplement/Plus'
-import { OrderContext } from '../../../contexts/orderContext';
+import dynamic from 'next/dynamic'
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { setCookie } from 'nookies';
-import { setUncaughtExceptionCaptureCallback } from 'process';
+import { OrderContext } from '../../../contexts/orderContext';
+import style from '../../../styles/PedidoStyle/Pedido.module.sass';
+const Complement = dynamic(() => import('./Complements/complement') ,{ssr: false});
+const AcaiOption = dynamic(() => import('./AcaiOption/acaiOption'),{ssr:false});
+const Topping = dynamic(() => import('./topping/topping') ,{ssr: false});
+const FruitOption = dynamic(() => import('./FruitOption/fruitOption') ,{ssr: false});
+const Plus = dynamic(() => import('./PlusComplement/Plus') ,{ssr: false});
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
     const { count, page, setPage, setNumberClient, numberClient, newArr, setCount, order } = useContext(OrderContext);
     const numberOrder = ["1", "2", "3", "4"];
     const arrayIndex = newArr && newArr[numberClient]
-    const arrayCheck = arrayIndex && arrayIndex['check' as keyof typeof arrayIndex];
-
+    const orderCheck = arrayIndex && arrayIndex['check' as keyof typeof arrayIndex] || false;
 
     const handlePagesOptions = (num?: number): ReactNode => {
         let pageCount = num;
@@ -31,9 +30,9 @@ export default function Pedidos() {
         return page[pageCount as keyof typeof page]
     }
 
-    function handleDisable(index: number){
-        let num = count 
-        return index <= num ? false : true
+    function handleDisable(index: number, checkValue: boolean){
+        let num = count
+        return (index <= num || checkValue) ? false : true
         
     }
     function handleChangePage(e: React.MouseEvent<HTMLDivElement, MouseEvent> | any, index: number): void {
@@ -62,7 +61,7 @@ export default function Pedidos() {
                     <div className={style.optionscard} key={index + 2}>
                         <input className={style.inputstyle} type='checkbox'
                             name={icon} id={icon}
-                            disabled={handleDisable(index)} checked={handleCheckedOptionS(index)}
+                            disabled={handleDisable(index, orderCheck)} checked={handleCheckedOptionS(index)}
                             readOnly
                             onClick={(e) => handleChangePage(e, index)}
                         />
