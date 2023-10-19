@@ -20,7 +20,7 @@ type orderContextType = {
     setOrder: (newState: {}) => void
     changePageAndCheck: (num: number) => void
     setNameProps: (name: {}) => void
-    saveChecked: (item: string, name?: string, page?: string) => string | boolean
+    saveChecked: (item: string, name?: string, page?: string) => string
 }
 const initialValue = {
     order: {},
@@ -86,7 +86,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
             newArr.splice(currentIntex, 0, cart[currentIntex])
         }
     }
-    function saveChecked(item: string, name?: string): string | boolean {
+    function saveChecked(item: string, name?: string) {
         let nameObj = name ? order[name as keyof typeof order] //pega o valor dentro do objeto tigela ou fruta
         : order[item as keyof typeof order]
         const value = nameObj ? nameObj : item
