@@ -30,6 +30,7 @@ export default function AcaiOption() {
         return (!!nameTigela && !!nameFruta) ? false : true
         
     }
+    console.log(order)
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Tamanho</p>

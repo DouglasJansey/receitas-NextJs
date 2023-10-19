@@ -44,12 +44,12 @@ export default function Pedidos() {
         const isChecked = !arrayIndex ? !!(index <= count) : valueCheck
         return isChecked
     }
-    console.log(newArr, cart, count) 
     function handleNumberClients(e: React.MouseEvent<HTMLButtonElement> | any){
         const { textContent } = e.target  
         if(textContent === '+'){
         setNumberClient( numberClient + 1) 
         }else{
+            if(numberClient <= 1) return 1
             setNumberClient( numberClient - 1)
             if(newArr.length === numberClient){
                 cart.pop()
@@ -110,13 +110,15 @@ export default function Pedidos() {
                 ))}
             </div>
             <div className={style.containerNumbers}>
+                <p className={style.textClientsOptions}>
+                    Escolha a quantidade de açaí que você deseja montar!
+                </p>
                 <div>
-                    Escolha a quantidade de Açaí que você deseja montar!
-                </div>
-                <div>
-                    <button type='button' name='remove' onClick={(e) => handleNumberClients(e)}>-</button>
+                    <button className={style.buttonNumberClient}
+                     type='button' name='remove' onClick={(e) => handleNumberClients(e)}>-</button>
                     {getNumbersOrder()}
-                    <button type='button' name='plus' onClick={(e) => handleNumberClients(e)} >+</button>
+                    <button className={style.buttonNumberClient} 
+                    type='button' name='plus' onClick={(e) => handleNumberClients(e)} >+</button>
                 </div>
             </div>
             <div className={style.containeroptions}>

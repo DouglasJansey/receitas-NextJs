@@ -59,7 +59,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     const { 'COOKIE-CART': saveCart, 'COOKIE-CLIENT-NUMBERS': clientNumbers } = parseCookies()
     const cartArray: object[] = saveCart && JSON.parse(saveCart)
     const newArr: object[] = []
-    const [numberClient, setNumberClient] = useState(clientNumbers && JSON.parse(clientNumbers) || 0)
+    const [numberClient, setNumberClient] = useState(clientNumbers && JSON.parse(clientNumbers) || 1)
     const [cart, setCart] = useState(cartArray && cartArray.concat(newArr) || [])
     const contextObj = {
         cart, order, count, name, setCart, numberClient, setNumberClient, editItensCart,
