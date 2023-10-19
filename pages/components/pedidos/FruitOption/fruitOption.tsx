@@ -11,8 +11,8 @@ type ButtonType = {
 
 export default function FruitOption() {
     const fruit = ["Morango", "Banana", "Manga"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, numberClient, editItensCart } = useContext(OrderContext)
-    const arrayIndex = newArr[numberClient]
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, currentIntex, editItensCart } = useContext(OrderContext)
+    const arrayIndex = newArr[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -23,7 +23,6 @@ export default function FruitOption() {
     function handlerButtonNext({fruta}: ButtonType){
        const nameFruta = !arrayIndex ? order[fruta as keyof typeof order]
        : arrayIndex[fruta as keyof typeof arrayIndex];
-       console.log(nameFruta)
        return (nameFruta) ? false : true
     }
 
@@ -47,10 +46,11 @@ export default function FruitOption() {
                         ))
                     }
                 </div>
-                <button 
+                <Button 
                 onClick={() => page <= 3 ? changePageAndCheck(4): ''}
                 className={style.buttonNext}
-                 >Proximo</button>
+                disabled={handlerButtonNext({fruta: "frutas"})}
+                 >Proximo</Button>
             </div>
         </div>
     )

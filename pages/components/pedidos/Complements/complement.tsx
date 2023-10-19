@@ -12,8 +12,8 @@ type ComplementType = {
 export default function Complement() {
     const complement = ['Granola', 'Paçoca', 'Amendoim', 'Cereal', 'Aveia', 'Granulado', 'Leite em pó', 'Choco Ball', 'Jujuba', 'Confetti', 'Chantilly', 'Biscoito']
     const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart,
-    numberClient, count, setNameProps, name, newArr, checkCart } = useContext(OrderContext);
-    const arrayIndex = newArr[numberClient]
+    currentIntex, count, setNameProps, name, newArr, checkCart } = useContext(OrderContext);
+    const arrayIndex = newArr[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -60,12 +60,13 @@ export default function Complement() {
                         ))
                     }
                 </div>
-                <button
+                <Button
                         onClick={() => page <= count ? changePageAndCheck(2) : ''}
                         className={style.buttonNext}
+                        disabled={handlerButtonNext({props: name})}
                         >
                         Proximo
-                    </button> 
+                    </Button> 
             </div>
         </div>
     )

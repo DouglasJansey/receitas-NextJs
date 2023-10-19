@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import dynamic from 'next/dynamic'
@@ -5,17 +6,18 @@ import { ReactNode, useContext, useEffect, useState } from 'react';
 import { setCookie } from 'nookies';
 import { OrderContext } from '../../../contexts/orderContext';
 import style from '../../../styles/PedidoStyle/Pedido.module.sass';
-const Complement = dynamic(() => import('./Complements/complement') ,{ssr: false});
-const AcaiOption = dynamic(() => import('./AcaiOption/acaiOption'),{ssr:false});
-const Topping = dynamic(() => import('./topping/topping') ,{ssr: false});
-const FruitOption = dynamic(() => import('./FruitOption/fruitOption') ,{ssr: false});
-const Plus = dynamic(() => import('./PlusComplement/Plus') ,{ssr: false});
+const Complement = dynamic(() => import('./Complements/complement'), { ssr: false });
+const AcaiOption = dynamic(() => import('./AcaiOption/acaiOption'), { ssr: false });
+const Topping = dynamic(() => import('./topping/topping'), { ssr: false });
+const FruitOption = dynamic(() => import('./FruitOption/fruitOption'), { ssr: false });
+const Plus = dynamic(() => import('./PlusComplement/Plus'), { ssr: false });
+
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
-    const { count, page, setPage, setNumberClient, numberClient, newArr, setCount, order } = useContext(OrderContext);
-    const numberOrder = ["1", "2", "3", "4"];
-    const arrayIndex = newArr && newArr[numberClient]
+    const { count, page, setPage, setNumberClient, currentIntex, setCurrentIndex, numberClient, newArr, setCount, order, cart } = useContext(OrderContext);
+    const numberOrder: number[] = [numberClient];
+    const arrayIndex = newArr && newArr[currentIntex]
     const orderCheck = arrayIndex && arrayIndex['check' as keyof typeof arrayIndex] || false;
 
     const handlePagesOptions = (num?: number): ReactNode => {
@@ -29,31 +31,66 @@ export default function Pedidos() {
         }
         return page[pageCount as keyof typeof page]
     }
-
-    function handleDisable(index: number, checkValue: boolean){
+    function handleDisable(index: number, checkValue: boolean) {
         let num = count
         return (index <= num || checkValue) ? false : true
-        
+
     }
     function handleChangePage(e: React.MouseEvent<HTMLDivElement, MouseEvent> | any, index: number): void {
         if (index !== page) setPage(index)
     }
-    function handleCheckedOptionS(index: number){
+    function handleCheckedOptionS(index: number) {
         const valueCheck = arrayIndex && !!arrayIndex['check' as keyof typeof arrayIndex]
         const isChecked = !arrayIndex ? !!(index <= count) : valueCheck
         return isChecked
     }
-
-    useEffect(()=>{
-        if(!arrayIndex && page !== count) {
+    console.log(newArr, cart, count) 
+    function handleNumberClients(e: React.MouseEvent<HTMLButtonElement> | any){
+        const { textContent } = e.target  
+        if(textContent === '+'){
+        setNumberClient( numberClient + 1) 
+        }else{
+            setNumberClient( numberClient - 1)
+            if(newArr.length === numberClient){
+                cart.pop()
+            }
+        }
+    }
+    function getNumbersOrder(){
+        for(let i = 1; i <= numberClient; i++){
+            numberOrder[i - 1] = i
+        }
+        return(
+             numberOrder.map((value, index) => (
+                 <span key={index + 2} className={style.containerNumber}>
+                     <input id={String(value)} name={String(value)} type='radio'
+                         checked={!!(index === currentIntex)} 
+                         onClick={() => setCurrentIndex(index)}
+                         readOnly
+                     />
+                     <label htmlFor={String(value)} className={style.labelstyle}>
+                         <h5>
+                             {value}
+                         </h5>
+                     </label>
+                 </span>
+             ))
+         )
+    }      
+    useEffect(() => {
+        if (!arrayIndex && page !== count) {
             setPage(count)
             setCount(0)
         }
-         if(newArr.length >= 1 && order) {
-             const cartCookie = JSON.stringify(newArr);
-             setCookie(undefined, "COOKIE-CART", cartCookie)
-         }
-    },[numberClient, order])
+        if (newArr.length >= 1 && order) {
+            const cartCookie = JSON.stringify(newArr);
+            setCookie(undefined, "COOKIE-CART", cartCookie)
+        }
+        if(numberClient > 0) {
+            const clientCookie = JSON.stringify(newArr.length)
+            setCookie(undefined,'COOKIE-CLIENT-NUMBERS', clientCookie)
+        }
+    }, [numberClient, order, newArr])
     return (
         <div className={style.container}>
             <div className={style.containerIcons}>
@@ -72,16 +109,15 @@ export default function Pedidos() {
                     </div>
                 ))}
             </div>
-            <div className={style.containerNumbers}>{numberOrder.map((value, index) => (
-                <span key={index + 2} className={style.containerNumber}>
-                    <input id={value} name={value} type='radio' onClick={() => setNumberClient(index)}
-                        checked={!!(index === numberClient)} readOnly
-                    />
-                    <label htmlFor={value} className={style.labelstyle}>
-                        {value}
-                    </label>
-                </span>
-            ))}
+            <div className={style.containerNumbers}>
+                <div>
+                    Escolha a quantidade de Açaí que você deseja montar!
+                </div>
+                <div>
+                    <button type='button' name='remove' onClick={(e) => handleNumberClients(e)}>-</button>
+                    {getNumbersOrder()}
+                    <button type='button' name='plus' onClick={(e) => handleNumberClients(e)} >+</button>
+                </div>
             </div>
             <div className={style.containeroptions}>
                 {handlePagesOptions(page)}

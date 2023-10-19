@@ -8,9 +8,9 @@ import produtos from '../../../../__test/produtos';
 
 export default function Plus() {
     const { order, setOrder, saveChecked,setPage, page,setCount, count,cart, setCart, 
-    setNameProps, numberClient, setNumberClient, newArr, editItensCart, checkCart } = useContext(OrderContext);
+    setNameProps, numberClient, currentIntex, newArr, editItensCart, checkCart } = useContext(OrderContext);
     const plus = produtos.filter(item => item.tipo === "adicional")
-    const arrayIndex = newArr[numberClient]
+    const arrayIndex = newArr[currentIntex]
     
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -24,12 +24,8 @@ export default function Plus() {
         return false
     }
     function addCart(order: {}){
-        !arrayIndex && setCart({...cart, [numberClient]:{...order, check: true}})
-       if(numberClient >= 4){
-          return setNumberClient(0)
-       }
+        !arrayIndex && setCart([...cart, {...order, check: true}])
        setOrder({})
-       setNumberClient(numberClient + 1)
        setCount(0)
        setPage(0)        
     }

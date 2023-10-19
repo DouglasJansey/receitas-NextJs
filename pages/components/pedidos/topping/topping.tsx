@@ -11,8 +11,8 @@ type ComplementType = {
 
 export default function Topping() {
     const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, editItensCart, numberClient, newArr } = useContext(OrderContext);
-    const arrayIndex = newArr[numberClient]
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, editItensCart, currentIntex, newArr } = useContext(OrderContext);
+    const arrayIndex = newArr[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -45,12 +45,13 @@ export default function Topping() {
                         ))
                     }
                 </div>
-                    <button
+                    <Button
                         onClick={() => page <= count ? changePageAndCheck(3) : ''}
                         className={style.buttonNext} 
+                        disabled={handlerButtonNext({props: "topping"})}
                         >
                         Proximo
-                    </button> 
+                    </Button> 
             </div>
         </div>
     )

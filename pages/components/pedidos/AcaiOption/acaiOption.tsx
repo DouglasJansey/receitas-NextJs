@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { ChangeEvent, useContext } from 'react';
 import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
@@ -12,8 +12,8 @@ type OptionsType = {
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart, newArr, checkCart, numberClient } = useContext(OrderContext)
-    const arrayIndex = newArr[numberClient]
+    const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart, newArr, checkCart, currentIntex } = useContext(OrderContext)
+    const arrayIndex = newArr[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
@@ -70,11 +70,12 @@ export default function AcaiOption() {
                     }
                 </div>
                 <div>
-                    <button
+                    <Button
                     onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
                     className={style.buttonNext}
+                    disabled={handlerButtonNext({tigela: "tigela", batido: "batido"})}
                 >Proximo
-                </button>
+                </Button>
                 </div>
             </div>
         </div>
