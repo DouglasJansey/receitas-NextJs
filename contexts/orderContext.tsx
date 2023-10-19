@@ -78,9 +78,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         }
        return value
     }
-    useMemo(() => {
 
-    },[])
     for(let i in cart){
         if(!newArr[i] && +i !== currentIntex){
             newArr.push(cart[+i])
@@ -88,7 +86,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
             newArr.splice(currentIntex, 0, cart[currentIntex])
         }
     }
-    function saveChecked(item: string, name?: string): any {
+    function saveChecked(item: string, name?: string): string | boolean {
         let nameObj = name ? order[name as keyof typeof order] //pega o valor dentro do objeto tigela ou fruta
         : order[item as keyof typeof order]
         const value = nameObj ? nameObj : item

@@ -39,7 +39,8 @@ export default function AcaiOption() {
                     {
                         sizeBowl.map((item: string, index: number) => (
                             <div className={style.bowlcards} key={index + 3}>
-                                <input className={style.inputstyle} type='radio' name="tigela" id={item} value={saveChecked(item)}
+                                <input className={style.inputstyle} type='radio'
+                                 name="tigela" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
                                     checked={checkCart(item, arrayIndex, "tigela")}
                                 />
