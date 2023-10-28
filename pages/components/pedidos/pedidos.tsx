@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import dynamic from 'next/dynamic'
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 import { setCookie } from 'nookies';
 import { OrderContext } from '../../../contexts/orderContext';
 import style from '../../../styles/PedidoStyle/Pedido.module.sass';

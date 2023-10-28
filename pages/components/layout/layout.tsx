@@ -11,7 +11,6 @@ export default function Layout({ children }: component) {
     <>
       <Header />
         <main>{children}</main>
-      <Footer />
     </>
   );
 };
