@@ -12,7 +12,6 @@ type orderContextType = {
     cart: object[]
     setCart: (state: any) => void
     checkCart: (item: string, arr: object, name?: string) => boolean
-    editItensCart: (name: string, value: any) => void
     setCount: (newState: number) => void
     setNumberClient: (newState: number) => void
     setCurrentIndex: (newState: number) => void
@@ -38,7 +37,6 @@ const initialValue = {
     setPage: () => 0,
     setOrder: () => { },
     setNameProps: () => { },
-    editItensCart: () => { },
     saveChecked: () => '',
     changePageAndCheck: () => 0,
     checkCart: () => false
@@ -62,7 +60,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     const [numberClient, setNumberClient] = useState(clientNumbers && JSON.parse(clientNumbers) || 1)
     const [cart, setCart] = useState(cartArray && cartArray.concat(newArr) || [])
     const contextObj = {
-        cart, order, count, name, setCart, numberClient, setNumberClient, editItensCart,
+        cart, order, count, name, setCart, numberClient, setNumberClient,
         setNameProps, setCount, setOrder, saveChecked, changePageAndCheck, page, setPage, newArr,
         checkCart, currentIntex, setCurrentIndex
     }
@@ -71,16 +69,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         setPage(num)
         setCount(num)
     }
-    function editItensCart(name: string, value: any): string{ 
-        let arrayIndex: any = cart[currentIntex as keyof typeof cart]
-        for(let _ in cart){
-            arrayIndex[name as keyof typeof arrayIndex] = value
-        }
-       return value
-    }
-    useMemo(() => {
 
-    },[])
     for(let i in cart){
         if(!newArr[i] && +i !== currentIntex){
             newArr.push(cart[+i])
@@ -96,12 +85,12 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     }
     function checkCart(item: string, arr: object, name?: string) {
         const valueCheck = name ? name : item;
+        console.log(name)
         if(name === 'Complemento' || name === 'Adicional'){
             return !arr ? order[item as keyof typeof order] 
         : arr && arr[item as keyof typeof arr] 
         }else{
-            return !arr ? !!(order[valueCheck as keyof typeof order] === item) 
-            : !!(arr && arr[valueCheck as keyof typeof arr] === item)   
+            return arr && !!(arr[valueCheck as keyof typeof arr] === item) || !!(order[valueCheck as keyof typeof order] === item)  
         }
      }
     return (

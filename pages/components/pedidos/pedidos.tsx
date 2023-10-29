@@ -3,9 +3,10 @@
 import React from 'react';
 import dynamic from 'next/dynamic'
 import { ReactNode, useContext, useEffect } from 'react';
-import { setCookie } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { OrderContext } from '../../../contexts/orderContext';
 import style from '../../../styles/PedidoStyle/Pedido.module.sass';
+import { useCart } from '../../../store/cartStore';
 const Complement = dynamic(() => import('./Complements/complement'), { ssr: false });
 const AcaiOption = dynamic(() => import('./AcaiOption/acaiOption'), { ssr: false });
 const Topping = dynamic(() => import('./topping/topping'), { ssr: false });
@@ -15,9 +16,10 @@ const Plus = dynamic(() => import('./PlusComplement/Plus'), { ssr: false });
 
 export default function Pedidos() {
     const icons = ['Açaí', 'Complementos', 'Cobertura', 'frutas', 'Adicionais']
-    const { count, page, setPage, setNumberClient, currentIntex, setCurrentIndex, numberClient, newArr, setCount, order, cart } = useContext(OrderContext);
+    const { count, page, setPage, setNumberClient, currentIntex, setCurrentIndex, numberClient, newArr, setCount, order } = useContext(OrderContext);
+    const [cart, addCart] = useCart(state => [state.cart, state.addCart])
     const numberOrder: number[] = [numberClient];
-    const arrayIndex = newArr && newArr[currentIntex]
+    const arrayIndex = cart && cart[currentIntex]
     const orderCheck = arrayIndex && arrayIndex['check' as keyof typeof arrayIndex] || false;
 
     const handlePagesOptions = (num?: number): ReactNode => {
@@ -82,15 +84,22 @@ export default function Pedidos() {
             setPage(count)
             setCount(0)
         }
-        if (newArr.length >= 1 && order) {
-            const cartCookie = JSON.stringify(newArr);
+        if (cart.length >= 1 && order) {
+            const cartCookie = JSON.stringify(cart);
             setCookie(undefined, "COOKIE-CART", cartCookie)
+        }
+        if(cart.length <= 0) {
+            const {'COOKIE-CART': cartCookie} = parseCookies()
+            const cookieValue = cartCookie && JSON.parse(cartCookie)
+            for( let i in cookieValue){
+                cart[+i] = cookieValue[+i]
+            }  
         }
         if(numberClient > 0) {
             const clientCookie = JSON.stringify(newArr.length)
             setCookie(undefined,'COOKIE-CLIENT-NUMBERS', clientCookie)
         }
-    }, [numberClient, order, newArr])
+    }, [numberClient, order, cart])
     return (
         <div className={style.container}>
             <div className={style.containerIcons}>

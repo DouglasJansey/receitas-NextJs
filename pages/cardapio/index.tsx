@@ -1,4 +1,4 @@
-import CardapioPage from "../../components/cardapio"
+import CardapioPage from "../components/cardapio"
 import style from '../../../styles/Home.module.sass'
 
 export default function Index(){

@@ -4,6 +4,7 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { useCart } from '../../../../store/cartStore';
 
 type ComplementType = {
     props: string
@@ -11,12 +12,13 @@ type ComplementType = {
 
 export default function Topping() {
     const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, editItensCart, currentIntex, newArr } = useContext(OrderContext);
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, currentIntex, newArr } = useContext(OrderContext);
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
     const arrayIndex = newArr[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && editItensCart(name, value)
+        arrayIndex && cartUpdate(currentIntex, name, value)
         setOrder({ ...order, [name]: value })
     }
 

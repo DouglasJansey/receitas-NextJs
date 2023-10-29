@@ -4,6 +4,7 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { useCart } from '../../../../store/cartStore';
 
 type ButtonType = {
     fruta: string,
@@ -11,12 +12,13 @@ type ButtonType = {
 
 export default function FruitOption() {
     const fruit = ["Morango", "Banana", "Manga"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, currentIntex, editItensCart } = useContext(OrderContext)
-    const arrayIndex = newArr[currentIntex]
+    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, currentIntex } = useContext(OrderContext)
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
+    const arrayIndex = cart[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && editItensCart(name, value)
+        arrayIndex && cartUpdate(currentIntex, name, value)
         setOrder({ ...order, [name]: value })
     }
    
