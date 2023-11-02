@@ -85,7 +85,6 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     }
     function checkCart(item: string, arr: object, name?: string) {
         const valueCheck = name ? name : item;
-        console.log(name)
         if(name === 'Complemento' || name === 'Adicional'){
             return !arr ? order[item as keyof typeof order] 
         : arr && arr[item as keyof typeof arr] 
