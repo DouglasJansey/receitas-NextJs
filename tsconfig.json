@@ -16,6 +16,6 @@
     "incremental": true,
     "types": ["bun-types", "jest"]
   },
-  "include": ["next-env.d.ts", "**/*.tsx", "pages/components/BannerPrincipal/BannerPrincipal.tsx", "pages/test/pedido.spec.tsx"],
+  "include": ["next-env.d.ts", "**/*.tsx", "pages/components/BannerPrincipal/BannerPrincipal.tsx", "pages/test/pedido.spec.tsx", "store/cartStore.ts"],
   "exclude": ["node_modules"]
 }

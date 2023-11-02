@@ -46,8 +46,8 @@ export default function Header() {
             {menu.map((item, index) => (
               <div key={index}>
                 <Link
-                  className={activeLink(`/index/${filterWords(item)}`)}
-                  href={`/index/${filterWords(item)}`}
+                  className={activeLink(`/${filterWords(item)}`)}
+                  href={`/${filterWords(item)}`}
                 >
                   {item}
                 </Link>
