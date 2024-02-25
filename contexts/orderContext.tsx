@@ -99,16 +99,6 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         setPage(num)
         setCount(num)
     }
-<<<<<<< HEAD
-    function editItensCart(name: string, value: any): string{ 
-        let arrayIndex: any = cart[currentIntex as keyof typeof cart]
-        for(let _ in cart){
-            arrayIndex[name as keyof typeof arrayIndex] = value
-        }
-       return value
-    }
-=======
->>>>>>> teste
 
     for(let i in cart){
         if(!newArr[i] && +i !== currentIntex){

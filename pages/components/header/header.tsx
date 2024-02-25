@@ -26,12 +26,13 @@ export default function Header() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(" ", "");
-    console.log(path)
+
     return path;
   };
   const activeLink = (url: string) => {
     const path = pathname === url
     const active = path ? style.activePath : style.linkStyle
+    
     return active
   };
   return (
@@ -47,12 +48,8 @@ export default function Header() {
             {menu.map((item, index) => (
               <div key={index}>
                 <Link
-                  className={activeLink(`/${filterWords(item)}`)}
-<<<<<<< HEAD
-                  href={`/${filterWords(item)}`}
-=======
+                  className={activeLink(`/index/${filterWords(item)}`)}
                   href={`/index/${filterWords(item)}`}
->>>>>>> teste
                 >
                   {item}
                 </Link>
