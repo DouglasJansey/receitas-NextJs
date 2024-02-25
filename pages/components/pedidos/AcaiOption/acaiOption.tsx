@@ -5,6 +5,7 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
 import { useCart } from '../../../../store/cartStore';
+import { CheckedValue } from '../../../../function/checked'
 type OptionsType = {
     tigela: string
     batido: string
@@ -13,19 +14,18 @@ type OptionsType = {
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate ])
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
     const { order, setOrder, saveChecked, page, changePageAndCheck, currentIntex } = useContext(OrderContext)
-    const arrayIndex = cart[currentIntex]
-    const valueCheck = (props: string, item: string) => {
-      const result = arrayIndex && arrayIndex[props] === item || order[props as keyof typeof order] === item
-      return !!result
-    }
+    const arrayIndex = cart[currentIntex] || order
+
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && cartUpdate(currentIntex, name, value)
+        arrayIndex && cartUpdate(arrayIndex, name, value)
         order && setOrder({ ...order, [name]: value })
     }
+
+
     function handlerButtonNext({ tigela, batido }: OptionsType): boolean {
         const nameTigela = !arrayIndex ? order[tigela as keyof typeof order]
             : arrayIndex[tigela as keyof typeof arrayIndex];
@@ -35,6 +35,8 @@ export default function AcaiOption() {
         return (!!nameTigela && !!nameFruta) ? false : true
 
     }
+
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Tamanho</p>
@@ -45,7 +47,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='radio' name="tigela" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={valueCheck("tigela", item)}
+                                    checked={CheckedValue(arrayIndex, item,"tigela")}
 
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
@@ -65,7 +67,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="batido" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={valueCheck("batido", item)}
+                                    checked={arrayIndex && CheckedValue(arrayIndex, item,"batido")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />

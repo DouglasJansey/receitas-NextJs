@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 import { parseCookies, setCookie } from 'nookies'
 
 type orderContextType = {
-    order: object
+    order: Order
     count: number
     numberClient: number
     currentIntex: number
@@ -11,18 +11,49 @@ type orderContextType = {
     name: object
     cart: object[]
     setCart: (state: any) => void
-    checkCart: (item: string, arr: object, name?: string) => boolean
     setCount: (newState: number) => void
     setNumberClient: (newState: number) => void
     setCurrentIndex: (newState: number) => void
     setPage: (newState: number) => void
-    setOrder: (newState: {}) => void
+    setOrder: (newState: Order) => void
     changePageAndCheck: (num: number) => void
     setNameProps: (name: {}) => void
     saveChecked: (item: string, name?: string, page?: string) => string | boolean
 }
+type Order = {
+    tigela: string;
+    batido: string;
+    [index: `complemento${number}`]: string;
+    [index: `adicional${number}`]: string;
+    topping: string;
+    frutas: string;
+};
+
 const initialValue = {
-    order: {},
+    order: {
+        tigela: "",
+        batido: "",
+        complemento0: "",
+        complemento1: "",
+        complemento2: "",
+        complemento3: "",
+        complemento4: "",
+        complemento5: "",
+        complemento6: "",
+        complemento7: "",
+        complemento8: "",
+        complemento9: "",
+        complemento10: "",
+        adicional0: "",
+        adicional1: "",
+        adicional2: "",
+        adicional3: "",
+        adicional4: "",
+        adicional5: "",
+        adicional6: "",
+        topping: "",
+        frutas: "",
+    },
     numberClient: 1,
     currentIntex: 0,
     count: 0,
@@ -39,7 +70,6 @@ const initialValue = {
     setNameProps: () => { },
     saveChecked: () => '',
     changePageAndCheck: () => 0,
-    checkCart: () => false
 }
 type orderContextProps = {
     children: ReactNode;
@@ -49,7 +79,7 @@ export const OrderContext = createContext<orderContextType>(initialValue);
 export const isChecked = false
 
 export const OrderContextProvider = ({ children }: orderContextProps) => {
-    const [order, setOrder] = useState(initialValue.order)
+    const [order, setOrder] = useState<Order>(initialValue.order)
     const [count, setCount] = useState(initialValue.count)
     const [currentIntex, setCurrentIndex] = useState(0)
     const [page, setPage] = useState(initialValue.page)
@@ -62,7 +92,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
     const contextObj = {
         cart, order, count, name, setCart, numberClient, setNumberClient,
         setNameProps, setCount, setOrder, saveChecked, changePageAndCheck, page, setPage, newArr,
-        checkCart, currentIntex, setCurrentIndex
+ currentIntex, setCurrentIndex
     }
 
     function changePageAndCheck(num: number) {
@@ -83,15 +113,7 @@ export const OrderContextProvider = ({ children }: orderContextProps) => {
         const value = nameObj ? nameObj : item
         return value
     }
-    function checkCart(item: string, arr: object, name?: string) {
-        const valueCheck = name ? name : item;
-        if(name === 'Complemento' || name === 'Adicional'){
-            return !arr ? order[item as keyof typeof order] 
-        : arr && arr[item as keyof typeof arr] 
-        }else{
-            return arr && !!(arr[valueCheck as keyof typeof arr] === item) || !!(order[valueCheck as keyof typeof order] === item)  
-        }
-     }
+ 
     return (
         <OrderContext.Provider value={contextObj}>
             {children}

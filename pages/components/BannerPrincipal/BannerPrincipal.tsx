@@ -58,7 +58,7 @@ export default function BannerPrincipal() {
             <span className={style.containerTextoInfo}>
               <h2 className={style.textTitle}>{banner.titulo}</h2>
               <h5 className={style.text}>{banner.descricao}</h5>
-              <Link className={style.linkRouter} href={"/index/pedido"}>
+              <Link className={style.linkRouter} href={"/pedido"}>
                 Monte o seu!
               </Link>
             </span>

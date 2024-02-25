@@ -3,6 +3,7 @@ import { useContext } from "react";
 import Link from "next/link";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { FiShoppingBag } from "react-icons/fi";
 
 import style from "../../../styles/HeaderStyle/Header.module.sass";
 import { useRouter } from "next/router";
@@ -25,7 +26,7 @@ export default function Header() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(" ", "");
-
+    console.log(path)
     return path;
   };
   const activeLink = (url: string) => {
@@ -47,7 +48,7 @@ export default function Header() {
               <div key={index}>
                 <Link
                   className={activeLink(`/${filterWords(item)}`)}
-                  href={`/${filterWords(item)}`}
+                  href={`/index/${filterWords(item)}`}
                 >
                   {item}
                 </Link>
