@@ -4,6 +4,8 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { useCart } from '../../../../store/cartStore';
+import { CheckedValue } from '../../../../function/checked';
 
 type ComplementType = {
     props: string
@@ -11,12 +13,13 @@ type ComplementType = {
 
 export default function Topping() {
     const complement = ['Chocolate', 'Morango', 'Leite Condensado', 'Uva', 'Sem Cobertura']
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, count, editItensCart, currentIntex, newArr } = useContext(OrderContext);
-    const arrayIndex = newArr[currentIntex]
+    const { order, setOrder, saveChecked, page, changePageAndCheck, count, currentIntex, newArr } = useContext(OrderContext);
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
+    const arrayIndex = cart && cart[currentIntex]
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && editItensCart(name, value)
+        arrayIndex && cartUpdate(arrayIndex, name, value)
         setOrder({ ...order, [name]: value })
     }
 
@@ -37,7 +40,7 @@ export default function Topping() {
                             <div className={style.bowlcards} key={index + 3}>
                                 <input className={style.inputstyle} type='radio' name="topping" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, arrayIndex, "topping")} />
+                                    checked={CheckedValue(arrayIndex, item,"topping")} />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <p className={style.text}>{item}</p>
                                 </label>

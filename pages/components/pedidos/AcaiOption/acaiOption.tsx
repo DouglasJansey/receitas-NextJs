@@ -4,6 +4,8 @@ import { ChangeEvent, useContext } from 'react';
 import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { useCart } from '../../../../store/cartStore';
+import { CheckedValue } from '../../../../function/checked'
 type OptionsType = {
     tigela: string
     batido: string
@@ -12,25 +14,29 @@ type OptionsType = {
 export default function AcaiOption() {
     const sizeBowl = ['300ml', '400ml', '500ml', '700ml', '1litro']
     const fruit = ["Morango", "Banana", "Natural"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck, editItensCart, newArr, checkCart, currentIntex } = useContext(OrderContext)
-    const arrayIndex = newArr[currentIntex]
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
+    const { order, setOrder, saveChecked, page, changePageAndCheck, currentIntex } = useContext(OrderContext)
+    const arrayIndex = cart[currentIntex] || order
+
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && editItensCart(name, value)
-        return setOrder({ ...order, [name]: value })
-
+        arrayIndex && cartUpdate(arrayIndex, name, value)
+        order && setOrder({ ...order, [name]: value })
     }
-    function handlerButtonNext({tigela, batido}: OptionsType):boolean {
+
+
+    function handlerButtonNext({ tigela, batido }: OptionsType): boolean {
         const nameTigela = !arrayIndex ? order[tigela as keyof typeof order]
             : arrayIndex[tigela as keyof typeof arrayIndex];
 
         const nameFruta = !arrayIndex ? order[batido as keyof typeof order]
             : arrayIndex[batido as keyof typeof arrayIndex];
         return (!!nameTigela && !!nameFruta) ? false : true
-        
+
     }
-    console.log(order)
+
+
     return (
         <div className={style.containeroptions}>
             <p>Escolha o seu Tamanho</p>
@@ -42,7 +48,8 @@ export default function AcaiOption() {
                                 <input className={style.inputstyle} type='radio'
                                  name="tigela" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, arrayIndex, "tigela")}
+                                    checked={CheckedValue(arrayIndex, item,"tigela")}
+
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/tigela.png`} alt="" />
@@ -61,7 +68,7 @@ export default function AcaiOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="batido" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, arrayIndex, "batido")}
+                                    checked={arrayIndex && CheckedValue(arrayIndex, item,"batido")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />
@@ -73,11 +80,11 @@ export default function AcaiOption() {
                 </div>
                 <div>
                     <Button
-                    onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
-                    className={style.buttonNext}
-                    disabled={handlerButtonNext({tigela: "tigela", batido: "batido"})}
-                >Proximo
-                </Button>
+                        onClick={() => page <= 3 ? changePageAndCheck(1) : ''}
+                        className={style.buttonNext}
+                        disabled={handlerButtonNext({ tigela: "tigela", batido: "batido" })}
+                    >Proximo
+                    </Button>
                 </div>
             </div>
         </div>

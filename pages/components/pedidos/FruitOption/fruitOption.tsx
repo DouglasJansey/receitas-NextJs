@@ -4,6 +4,8 @@ import style from '../../../../styles/PedidoStyle/Pedido.module.sass';
 import React from 'react';
 import { OrderContext } from '../../../../contexts/orderContext';
 import Button from '../../../../Utils/Button/button';
+import { useCart } from '../../../../store/cartStore';
+import { CheckedValue } from '../../../../function/checked';
 
 type ButtonType = {
     fruta: string,
@@ -11,19 +13,20 @@ type ButtonType = {
 
 export default function FruitOption() {
     const fruit = ["Morango", "Banana", "Manga"]
-    const { order, setOrder, saveChecked, page, changePageAndCheck,checkCart, newArr, currentIntex, editItensCart } = useContext(OrderContext)
-    const arrayIndex = newArr[currentIntex]
+    const { order, setOrder, saveChecked, page, changePageAndCheck, newArr, currentIntex } = useContext(OrderContext)
+    const [cart, cartUpdate] = useCart(state => [state.cart, state.cartUpdate])
+    const arrayIndex = cart[currentIntex] || order
 
     function handleChangeInputValue(e: ChangeEvent<HTMLInputElement> | any) {
         const { value, name } = e.target
-        arrayIndex && editItensCart(name, value)
+        arrayIndex && cartUpdate(arrayIndex, name, value)
         setOrder({ ...order, [name]: value })
     }
-   
-    function handlerButtonNext({fruta}: ButtonType){
-       const nameFruta = !arrayIndex ? order[fruta as keyof typeof order]
-       : arrayIndex[fruta as keyof typeof arrayIndex];
-       return (nameFruta) ? false : true
+
+    function handlerButtonNext({ fruta }: ButtonType) {
+        const nameFruta = !arrayIndex ? order[fruta as keyof typeof order]
+            : arrayIndex[fruta as keyof typeof arrayIndex];
+        return (nameFruta) ? false : true
     }
 
     return (
@@ -36,7 +39,7 @@ export default function FruitOption() {
                             <div className={style.bowlcards} key={index + 4}>
                                 <input className={style.inputstyle} type='radio' name="frutas" id={item} value={saveChecked(item)}
                                     onChange={(e) => handleChangeInputValue(e)}
-                                    checked={checkCart(item, arrayIndex, "frutas")}
+                                    checked={CheckedValue(arrayIndex, item,"frutas")}
                                 />
                                 <label htmlFor={item} className={style.labelstyle}>
                                     <img src={`/images/icons/${item}.png`} alt="" />
@@ -46,11 +49,11 @@ export default function FruitOption() {
                         ))
                     }
                 </div>
-                <Button 
-                onClick={() => page <= 3 ? changePageAndCheck(4): ''}
-                className={style.buttonNext}
-                disabled={handlerButtonNext({fruta: "frutas"})}
-                 >Proximo</Button>
+                <Button
+                    onClick={() => page <= 3 ? changePageAndCheck(4) : ''}
+                    className={style.buttonNext}
+                    disabled={handlerButtonNext({ fruta: "frutas" })}
+                >Proximo</Button>
             </div>
         </div>
     )
